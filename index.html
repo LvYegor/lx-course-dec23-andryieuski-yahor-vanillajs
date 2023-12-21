@@ -1,643 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Stores Summary</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Muli&display=swap"
-      rel="stylesheet"
-    />
-    
-    <script src="https://kit.fontawesome.com/5b59badcee.js" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div class="flex-container">
-        <aside class="sitebar-menu">
-            <header class="sitebar-menu__header">
-                <h3 class="title">Stores List</h3>
-            </header>
-            
-            <!-- Stores list input container -->
-            <div class="search">
-                <div class="sitebar-menu__input">
-                    <input placeholder="Search" />
-                    <button>
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button>
-                        <i class="fas fa-sync"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Hide and pin buttons -->
-            <div class="control-buttons">
-                <div class="pin-up">
-                    <button>
-                        <i class="fas fa-angle-up"></i>
-                    </button>
-                    <button>
-                        <i class="fas fa-thumbtack"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stores list -->
-            <ul class="sitebar-menu__list">    
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Funk - Daniel</h4>
-                        <p class="store-location">AL, Port, 6357 Macejkovic Crossing.</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4>5098</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Stores Summary</title>
+        <link rel="stylesheet" href="./style.css" />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Muli&display=swap"
+        rel="stylesheet"
+        />
+        
+        <script src="https://kit.fontawesome.com/5b59badcee.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="stores-menu">
+            <aside id="sitebar-menu" class="sitebar-menu">
+                <header id="sitebar-menu__header" class="sitebar-menu__header">
+                    <h3 class="title">Stores List</h3>
+                </header>
                 
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schiller - West</h4>
-                        <p class="store-location">MA, New, 3002 Daugherty Park</p>
+                <!-- Stores list input container -->
+                <div class="search">
+                    <div class="sitebar-menu__input">
+                        <input id="search-input" class="search-input" placeholder="Search" />
+                        <button id="search-button" class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button id="refresh-button" class="refresh-button">
+                            <i class="fas fa-sync"></i>
+                        </button>
+                        <button id="reset-button" class="reset-button hidden">
+                            <i class="fa-regular fa-circle-xmark"></i>
+                        </button>
                     </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8082</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schumm, O`Keefe and Hudson</h4>
-                        <p class="store-location">GA, New, 30506 Bogisich Club</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8419</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Funk - Daniel</h4>
-                        <p class="store-location">AL, Port, 6357 Macejkovic Crossing.</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">5098</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-                
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schiller - West</h4>
-                        <p class="store-location">MA, New, 3002 Daugherty Park</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8082</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schumm, O`Keefe and Hudson</h4>
-                        <p class="store-location">GA, New, 30506 Bogisich Club</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8419</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Funk - Daniel</h4>
-                        <p class="store-location">AL, Port, 6357 Macejkovic Crossing.</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">5098</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-                
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schiller - West</h4>
-                        <p class="store-location">MA, New, 3002 Daugherty Park</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8082</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schumm, O`Keefe and Hudson</h4>
-                        <p class="store-location">GA, New, 30506 Bogisich Club</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8419</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Funk - Daniel</h4>
-                        <p class="store-location">AL, Port, 6357 Macejkovic Crossing.</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">5098</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-                
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schiller - West</h4>
-                        <p class="store-location">MA, New, 3002 Daugherty Park</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8082</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-
-                <li class="store-list-item">
-                    <div class="store-list-item__info">
-                        <h4>Schumm, O`Keefe and Hudson</h4>
-                        <p class="store-location">GA, New, 30506 Bogisich Club</p>
-                    </div>
-                    <div class="store-list-item__area">
-                        <h4 class="area-amount">8419</h4>
-                        <p class="area-unit">sq.m</p>
-                    </div>
-                </li>
-            </ul>
-
-            <!-- Stores list footer -->
-            <div class="footer-menu footer-position-aside">
-                <button>
-                    <i class="fas fa-plus"></i>
-                    <span>Create</span>
-                </button>
-            </div>
-        </aside>
-
-        <!-- Stores details -->
-        <div class="main-container">
-            <header class="main-container__header">
-                <h3 class="title">Store Details</h3>
-            </header>
-
-            <div class="store-details-table">
-                <div class='store-details-table__requisites'>
-                    <p><b>Email:</b> Lucienne_Emard16@yahoo.com</p>
-                    <p><b>Phone Number:</b> 650.029.9794 x6382</p>
-                    <p><b>Address:</b> MA, New, 3002 Daugherty Park</p>
                 </div>
-                <div>
-                    <p><b>Established Date:</b> Dec 20, 2018</p>
-                    <p><b>Floor Area:</b> 8082</p>
+
+                <!-- Hide and pin buttons -->
+                <div id="stores-list-control-buttons" class="control-buttons">
+                    <div class="pin-up">
+                        <button id="stores-list-up-button">
+                            <i class="fas fa-angle-up"></i>
+                        </button>
+                        <button id="stores-list-down-button" class="hidden">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </button>
+                        <button id="stores-list-pin-button">
+                            <i class="fas fa-thumbtack"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="control-buttons">
-                <div class="pin-up">
+
+                <!-- Stores list -->
+                <ul id="sitebar-menu__list" class="sitebar-menu__list"></ul>
+
+                <!-- Stores list footer -->
+                <footer class="footer-menu footer-position-aside">
                     <button>
-                        <i class="fas fa-angle-up"></i>
+                        <i class="fas fa-plus"></i>
+                        <span>Create</span>
+                    </button>
+                </footer>
+            </aside>
+
+            <!-- Stores details -->
+            <div id="store-details-container" class="store-details-container">
+                <header class="store-details-container__header">
+                    <h3 id="details-title" class="title hidden">Store Details</h3>
+                    <h3 id="not-selected-details-title" class="title">Store is not selected</h3>
+                </header>
+
+                <div class="store-details-table">
+                    <div id="store-details-table__requisites-left" class="store-details-table__requisites hidden">
+                        <div class="requisite"><b>Email:</b><p id="email"></p></div>
+                        <div class="requisite"><b>Phone Number:</b><p id="phone-number"></p></div>
+                        <div class="requisite"><b>Address:</b><p id="address"></p></div>
+                    </div>
+                    <div id="store-details-table__requisites-right" class="store-details-table__requisites hidden">
+                        <div class="requisite"><b>Established Date:</b><p id="established-date"></p></div>
+                        <div class="requisite"><b>Floor Area:</b><p id="floor-area"></p></div>
+                    </div>
+                </div>
+                
+                <div id="control-buttons" class="control-buttons hidden">
+                    <div class="pin-up">
+                        <button id="stores-details-up-button">
+                            <i class="fas fa-angle-up"></i>
+                        </button>
+                        <button id="stores-details-down-button" class="hidden">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </button>
+                        <button id="stores-details-pin-button">
+                            <i class="fas fa-thumbtack"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="store-details" class="amount-of-products hidden">
+                        <div class="amount-of-products__all">
+                            <span id="amount-all-filter"></span>
+                            <span>All</span>
+                        </div>
+
+                        <div class="vertical-line"></div>
+
+                        <div class="button-ok amount-of-products__button">
+                            <div class="amount-of-products__wrapper">
+                                <button>
+                                    <i class="fa-regular fa-circle-check"></i>
+                                </button>
+                                <p>Ok</p>
+                                <span id="amount-ok-filter" class="amount-all_span"></span>
+                            </div>
+                        </div>
+
+                        <div class="button-storage amount-of-products__button">
+                            <div class="amount-of-products__wrapper">
+                                <button>
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </button>
+                                <p>Storage</p>
+                                <span id="amount-storage-filter" class="amount-all_span"></span>
+                            </div>
+                        </div>
+                        <div class="button-out-of-stock amount-of-products__button">
+                            <div class="amount-of-products__wrapper">
+                                <button>
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                </button>
+                                <p>Out of stock</p>
+                                <span id="amount-out-of-stock-filter" class="amount-all_span"></span>
+                            </div>
+                        </div>
+                </div>
+                <main>
+                    <section>
+                        <div id="not-selected-item-message" class="not-selected-item-message">
+                            <i class="fa-solid fa-store not-selected-icon"></i>
+                            <h4>The store is not selected</h4>
+                            <p>Please select the store to proceed</p>
+                        </div>
+
+                        <!-- Store details. Products list  -->
+                        <div id="products-list" class="products-list hidden">
+                            <div class="products-list__title">Products</div>
+
+                            <div class="products-list__header">
+                                <div class="products-list__header-item ">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Name</p>
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Price</p>
+
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Specs</p>
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Supplier Info</p>
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Country of origin</p>
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Prod. company</p>
+                                </div>
+                                <div class="products-list__header-item">
+                                    <div class="sort-buttons">
+                                        <div><i class="fa-solid fa-sort"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                        <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                                    </div>
+                                    <p>Rating</p>
+                                </div>
+                                <div class="products-list__header-item"></div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                <!-- Store details footer -->
+                <footer id= "footer-menu-details" class="footer-menu footer-position-main hidden">
+                    <button>
+                        <i class="fas fa-plus"></i>
+                        <span>Create</span>
                     </button>
                     <button>
-                        <i class="fas fa-thumbtack"></i>
+                        <i class="far fa-trash-alt"></i>
+                        <span>Delete</span>
                     </button>
-                </div>
+                </footer>
             </div>
-            <div class="store-details">
-                
-                <div class="amount-of-products">
-                    <div class="amount-of-products__all">
-                        <span>100</span>
-                        <span>All</span>
-                    </div>
-    
-                    <div class="vertical-line"></div>
-    
-                    <div class="button-ok amount-of-products__button">
-                        <div class="amount-of-products__wrapper">
-                            <button>
-                                <i class="fa-regular fa-circle-check"></i>
-                            </button>
-                            <p>Ok</p>
-                            <span class="amount-all_span">50</span>
-                        </div>
-                    </div>
-    
-                    <div class="button-storage amount-of-products__button">
-                        <div class="amount-of-products__wrapper">
-                            <button>
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </button>
-                            <p>Storage</p>
-                            <span class="amount-all_span">30</span>
-                        </div>
-                    </div>
-                    <div class="button-out-of-stock amount-of-products__button">
-                        <div class="amount-of-products__wrapper">
-                            <button>
-                                <i class="fa-solid fa-circle-exclamation"></i>
-                            </button>
-                            <p>Out of stock</p>
-                            <span class="amount-all_span">20</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <main>
-                <section>
-
-                    <!-- Store details. Products list  -->
-                    <div class="grid-container">
-                        <div class="table-title">Products</div>
-
-                        <div class="grid-container__table-header">
-                            <div class="grid-container__header-item">Name</div>
-                            <div class="grid-container__header-item product-price">Price</div>
-                            <div class="grid-container__header-item">Specs</div>
-                            <div class="grid-container__header-item">Supplier Info</div>
-                            <div class="grid-container__header-item">Country of origin</div>
-                            <div class="grid-container__header-item">Prod. company</div>
-                            <div class="grid-container__header-item">Rating</div>
-                            <div class="grid-container__header-item"></div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                        <div class="grid-container__list-row">
-                            <div class="grid-container__list-item grid-container__name-item">
-                                <b class="text-wrapping" title="Refined Concrete Chicken">Refined Concrete Chicken</b>
-                                <p class="product_id">1</p>
-                            </div>
-                            <div class="grid-container__list-item product-price" title="9 255 USD"><b>9 255</b> USD</div>
-
-                            <div class="grid-container__list-item ellipsis center-item" title="Quisque in finibus metus.">
-                                <p class="ellipsis">Quisque in finibus metus.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Praesent ultrices, mi mollis.">
-                                <p class="ellipsis">Praesent ultrices, mi mollis.</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Denmark">
-                                <p class="ellipsis">Denmark</p>
-                            </div>
-                            <div class="grid-container__list-item ellipsis center-item" title="Ortiz, Mante and Hermiston">
-                                <p class="ellipsis">Ortiz, Mante and Hermiston</p>
-                            </div>
-                            <div class="product-rating center-item" title="5 stars">
-                                <span class="star-full">&starf;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                                <span class="star-empty">&star;</span>
-                            </div>
-                            <div class="grid-container__list-item center-item">&gt;</div>
-                        </div>
-
-                    </div>
-                </section>
-            </main>
-
-            <!-- Store details footer -->
-            <footer class="footer-menu footer-position-main">
-                <button>
-                    <i class="fas fa-plus"></i>
-                    <span>Create</span>
-                </button>
-                <button>
-                    <i class="far fa-trash-alt"></i>
-                    <span>Delete</span>
-                </button>
-            </footer>
         </div>
-    </div>
-  </body>
+        <script type="module" src="data.js"></script>
+        <script type="module" src="script.js"></script>
+    </body>
 </html>

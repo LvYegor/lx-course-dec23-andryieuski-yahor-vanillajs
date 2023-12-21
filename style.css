@@ -6,7 +6,7 @@
   font-family: "Muli", sans-serif;
 }
 
-.flex-container {
+.stores-menu {
   display: flex;
 }
 
@@ -14,6 +14,7 @@
   flex: 0 0 300px;
   height: 100vh;
   overflow-y: auto;
+  border-right: solid 1px #afcfe7;
 }
 
 .sitebar-menu__header {
@@ -78,13 +79,6 @@
   box-shadow: 0 1px 10px -2px steelblue;
 }
 
-.search > p {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0;
-  padding: 10px 0 20px 0;
-}
-
 .sitebar-menu__input {
   display: flex;
   align-items: center;
@@ -135,15 +129,12 @@
 .pin-up > button {
   width: 35px;
   height: 20px;
+  margin-right: 5px;
   background: #cee1ef;
   color: steelblue;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.pin-up > button:first-of-type {
-  margin-right: 5px;
 }
 
 .pin-up > button:hover {
@@ -195,14 +186,14 @@
   margin: 5px;
 }
 
-.main-container {
+.store-details-container {
   flex: 1 1 100%;
   align-self: flex-start;
   height: 100vh;
   overflow-y: auto;
 }
 
-.main-container__header{
+.store-details-container__header{
   padding-left: 45px;
   background: #eff4f8;
   position: sticky;
@@ -212,22 +203,22 @@
   z-index: 10;
 }
 
-.main-container > .control-buttons {
+.store-details-container > .control-buttons {
   background-color: #eff4f8;
-  border-bottom: solid 1px;
+  border-bottom: solid 1px #afcfe7;
   z-index: 10;
 }
 
-.main-container > .control-buttons > .pin-up > button {
+.store-details-container > .control-buttons > .pin-up > button {
   margin-bottom: -10px;
 }
 
-.store-details {
-  background-color: #eff4f8;
-  padding-bottom: 20px;
-  border-bottom: solid gainsboro 1px;
-  box-shadow: 0 1px 10px -2px steelblue;
-}
+/*.store-details {*/
+/*  background-color: #eff4f8;*/
+/*  padding-bottom: 20px;*/
+/*  border-bottom: solid gainsboro 1px;*/
+/*  box-shadow: 0 1px 10px -2px steelblue;*/
+/*}*/
 
 .store-details-table {
   display: flex;
@@ -244,10 +235,19 @@
   margin-right: 30px;
 }
 
+.requisite {
+  display: flex;
+  gap: 5px;
+}
+
 .amount-of-products {
   display: flex;
   align-items: center;
   padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #eff4f8;
+  border-bottom: solid gainsboro 1px;
+  box-shadow: 0 1px 10px -2px steelblue;
 }
 
 .amount-of-products__all {
@@ -327,10 +327,6 @@
   color: red;
 }
 
-.product-price {
-  text-align: end;
-}
-
 .price-container {
   display: flex;
   justify-content: end;
@@ -343,6 +339,10 @@
   display: flex;
 }
 
+.star-size {
+  font-size: 15px;
+}
+
 .star-full {
   color: rgb(255, 166, 0);
 }
@@ -353,21 +353,48 @@
   text-overflow: ellipsis;
 }
 
-.grid-container {
+.not-selected-icon {
+  font-size: 80px;
+}
+
+.not-selected-item-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 200px;
+  color: #8da1a4;
+}
+
+.products-list {
   margin: 20px;
 }
 
-.table-title {
+.products-list__title {
   background-color: #f7f7f7;
   border-bottom: solid gainsboro 1px;
   padding: 10px 5px;
 }
 
-.grid-container__header-item {
+.products-list__header-item {
   background-color: #f7f7f7;
   border-bottom: solid gainsboro 1px;
   padding: 10px 5px;
   font-size: small;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.products-list__header-item:not(:last-child):hover {
+  cursor: pointer;
+  background-color: #eeeeee;
+}
+
+.sort-buttons {
+  display: flex;
+  align-items: center;
 }
 
 .grid-container__name-item {
@@ -376,24 +403,24 @@
   gap: 10px;
 }
 
-.grid-container__list-item {
+.products-list__list-item {
   border-bottom: solid gainsboro 1px;
   padding: 10px 5px;
   font-size: small;
   
 }
 
-.grid-container__list-row, .grid-container__table-header {
+.products-list__list-row, .products-list__header {
   display: grid;
-  grid-template-columns: 20% 7% repeat(5, 1fr) 5%;
+  grid-template-columns: 18% 7% 15% 15% 10% 15% 15% 5%;
 }
 
-.grid-container__table-header {
+.products-list__header {
   position: sticky;
   top: 53px;
 }
 
-.grid-container__list-row:hover {
+.products-list__list-row:hover {
   cursor: pointer;
   background-color: #eeeeee;
 }
@@ -423,6 +450,10 @@
   bottom: 49px;
   position: absolute;
   left: 53px;
+}
+
+.hidden {
+  display: none;
 }
 
 @media (max-width: 833px) {
