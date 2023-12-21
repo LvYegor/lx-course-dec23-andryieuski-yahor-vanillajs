@@ -213,13 +213,6 @@
   margin-bottom: -10px;
 }
 
-/*.store-details {*/
-/*  background-color: #eff4f8;*/
-/*  padding-bottom: 20px;*/
-/*  border-bottom: solid gainsboro 1px;*/
-/*  box-shadow: 0 1px 10px -2px steelblue;*/
-/*}*/
-
 .store-details-table {
   display: flex;
   justify-content: flex-start;

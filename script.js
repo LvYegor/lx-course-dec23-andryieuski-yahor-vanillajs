@@ -4,6 +4,7 @@ const OK_STATUS = "OK";
 const STORAGE_STATUS = "STORAGE";
 const OUT_OF_STOCK_STATUS = "OUT_OF_STOCK";
 const RATING_COLUMN_INDEX = 6;
+
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
     const resetButton = document.getElementById("reset-button");
@@ -27,8 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
             resetButton.classList.add("hidden");
         }
     });
-
-
 });
 
 function generateStoresList(data) {
@@ -170,8 +169,10 @@ function fillAmountFilter(storeDetailsData) {
 
     const okFilter = document.getElementById("amount-ok-filter");
     okFilter.textContent = String(okAmount);
+
     const storageFilter = document.getElementById("amount-storage-filter");
     storageFilter.textContent = String(storageAmount);
+
     const outOfStockFilter = document.getElementById("amount-out-of-stock-filter");
     outOfStockFilter.textContent = String(outOfStockAmount);
 }
@@ -180,6 +181,7 @@ function clearProductsList() {
     const productsList = document.getElementById("products-list");
 
     const productRows = productsList.getElementsByClassName("products-list__list-row");
+
     while (productRows.length > 0) {
         productRows[0].parentNode.removeChild(productRows[0]);
     }
@@ -188,10 +190,12 @@ function clearProductsList() {
 function createProductNameDiv(productRow, item) {
     const productNameDiv = document.createElement("div");
     productNameDiv.className = "products-list__list-item grid-container__name-item";
+
     const productName = document.createElement("b");
     productName.className = "text-wrapping";
     productName.title = item.Name;
     productName.textContent = item.Name;
+
     const productID = document.createElement("p");
     productID.className = "product_id";
     productID.textContent = item.id;
@@ -206,8 +210,10 @@ function createProductPriceDiv(productRow, item) {
     const productPriceDiv = document.createElement("div");
     productPriceDiv.className = "products-list__list-item";
     productPriceDiv.title = `${item.Price} USD`;
+
     const productPrice = document.createElement("b");
     productPrice.textContent = item.Price;
+
     const productPriceUnit = document.createElement("p");
     productPriceUnit.textContent = "USD";
 
@@ -221,6 +227,7 @@ function createProductSpecsDiv(productRow, item) {
     const productSpecsDiv = document.createElement("div");
     productSpecsDiv.className = "products-list__list-item ellipsis center-item";
     productSpecsDiv.title = item.Specs;
+
     const productSpecs = document.createElement("p");
     productSpecs.className = "ellipsis";
     productSpecs.textContent = item.Specs;
@@ -234,6 +241,7 @@ function createProductSupplierInfoDiv(productRow, item) {
     const productSupplierInfoDiv = document.createElement("div");
     productSupplierInfoDiv.className = "products-list__list-item ellipsis center-item";
     productSupplierInfoDiv.title = item.SupplierInfo;
+
     const productSupplierInfo = document.createElement("p");
     productSupplierInfo.className = "ellipsis";
     productSupplierInfo.textContent = item.SupplierInfo;
@@ -247,6 +255,7 @@ function createProductCountryOfOriginDiv(productRow, item) {
     const productCountryOfOriginDiv = document.createElement("div");
     productCountryOfOriginDiv.className = "products-list__list-item ellipsis center-item";
     productCountryOfOriginDiv.title = item.MadeIn;
+
     const productCountryOfOrigin = document.createElement("p");
     productCountryOfOrigin.className = "ellipsis";
     productCountryOfOrigin.textContent = item.MadeIn;
@@ -260,6 +269,7 @@ function createProductProdCompanyDiv(productRow, item) {
     const productProdCompanyDiv = document.createElement("div");
     productProdCompanyDiv.className = "products-list__list-item ellipsis center-item";
     productProdCompanyDiv.title = item.ProductionCompanyName;
+
     const productProdCompany = document.createElement("p");
     productProdCompany.className = "ellipsis";
     productProdCompany.textContent = item.ProductionCompanyName;
@@ -293,6 +303,7 @@ function createProductRatingDiv(productRow, item) {
 function createArrowDiv(productRow) {
     const rowArrowDiv = document.createElement("div");
     rowArrowDiv.className = "products-list__list-item ellipsis center-item";
+
     const rowArrowIcon = document.createElement("i");
     rowArrowIcon.className = "fa-solid fa-chevron-right";
 
@@ -396,8 +407,10 @@ searchInput.addEventListener("keydown", function(event) {
 
 document.getElementById("reset-button").addEventListener("click", function() {
     searchInput.value = "";
+
     clearStoresList();
     generateStoresList(STORES);
+
     this.classList.add("hidden");
     document.getElementById("refresh-button").classList.remove("hidden");
 });
@@ -405,6 +418,7 @@ document.getElementById("reset-button").addEventListener("click", function() {
 function clearStoresList() {
     const storesList = document.getElementById("sitebar-menu__list");
     const storesItems = storesList.getElementsByClassName("store-list-item");
+
     while (storesItems.length > 0) {
         storesItems[0].parentNode.removeChild(storesItems[0]);
     }
@@ -470,7 +484,6 @@ function sortColumn(headerItem, order) {
     const productList = document.getElementById("products-list");
     clearProductsList();
 
-
     rows.forEach(row => {
         productList.appendChild(row);
     });
@@ -479,6 +492,7 @@ function sortColumn(headerItem, order) {
 function extractColumnValue(row, columnIndex) {
     const columns = row.querySelectorAll(".products-list__list-item");
     const column = columns[columnIndex];
+
     if (columnIndex === RATING_COLUMN_INDEX) {
         return column.dataset.rating;
     } else {
