@@ -217,12 +217,10 @@ function handleStoreDetailsContainerScroll() {
         upButton.classList.add(hiddenClassName);
         downButton.classList.remove(hiddenClassName);
         pinButton.classList.add(hiddenClassName);
-
     } else {
         upButton.classList.remove(hiddenClassName);
         downButton.classList.add(hiddenClassName);
         pinButton.classList.remove(hiddenClassName);
-
     }
 }
 
@@ -361,7 +359,7 @@ function resetFilterButtonsAttribute() {
 
 function shouldSetFilterButtonAllToTrue(should) {
     if (should) {
-        filterButtonAll.setAttribute("data-is-active", "true")
+        filterButtonAll.setAttribute("data-is-active", "true");
     }
 }
 
@@ -428,11 +426,9 @@ function generateStoresList(data) {
         storesListItem.className = storeListItemClassName;
         storesListItem.id = `store-list-item-${item.id}`;
 
-
         if (+activeStoreID === +item.id) {
-            storesListItem.classList.add(selectedBackgroundClassName)
+            storesListItem.classList.add(selectedBackgroundClassName);
         }
-
 
         const infoDiv = document.createElement("div");
         infoDiv.className = "store-list-item__info";
@@ -466,7 +462,7 @@ function generateStoresList(data) {
         storesListItem.addEventListener("click", (event) => {
             resetStoreListStyles();
 
-            onStoreListItemClick(event.currentTarget.id)
+            onStoreListItemClick(event.currentTarget.id);
 
             event.currentTarget.classList.add(selectedBackgroundClassName);
         });
@@ -477,9 +473,7 @@ function generateStoresList(data) {
 
 function resetStoreListStyles() {
     const storeItems = document.querySelectorAll(`.${storeListItemClassName}`);
-    for (let i = 0; i < storeItems.length; i++) {
-        storeItems[i].classList.remove(selectedBackgroundClassName);
-    }
+    storeItems.forEach(item => item.classList.remove(selectedBackgroundClassName));
 }
 
 function onStoreListItemClick(id) {
@@ -797,7 +791,6 @@ async function sortColumn(headerItem, order) {
     const storeId = storeDetailsContainer.dataset.storeId;
     const storeRelProducts = await fetchStoreProductsById(storeId);
 
-
     rows.sort((a, b) => {
         const aValue = extractColumnValue(a, columnIndex);
         const bValue = extractColumnValue(b, columnIndex);
@@ -836,15 +829,11 @@ function extractColumnValue(row, columnIndex) {
 
 function showModalStoreCreate() {
     const createBtn = document.querySelector("#create-store-button");
-    let favDialog = document.querySelector("#create-store-popup");
+    const favDialog = document.querySelector("#create-store-popup");
     createBtn.addEventListener("click", () => favDialog.showModal());
-    let cancelButtonPopup = document.querySelector(
-        `#create-store-popup .popup-cancel-btn`
-    );
-    let createButtonPopup = document.querySelector(
-        `#create-store-popup .popup-create-btn`
-    );
-    let form = document.querySelector(`#create-store-popup form`);
+    const cancelButtonPopup = document.querySelector(`#create-store-popup .popup-cancel-btn`);
+    const createButtonPopup = document.querySelector(`#create-store-popup .popup-create-btn`);
+    const form = document.querySelector(`#create-store-popup form`);
 
     createButtonPopup.addEventListener("click", () => {
         createNewStore(form.elements);
@@ -855,17 +844,13 @@ function showModalStoreCreate() {
 
 function showModalProductCreate() {
     const createBtn = document.querySelector("#create-product-button");
-    let favDialog = document.querySelector(`#create-product-popup`);
+    const favDialog = document.querySelector(`#create-product-popup`);
     createBtn.addEventListener("click", () => {
         favDialog.showModal();
     });
-    let cancelButtonPopup = document.querySelector(
-        `#create-product-popup .popup-cancel-btn`
-    );
-    let createButtonPopup = document.querySelector(
-        `#create-product-popup .popup-create-btn`
-    );
-    let form = document.querySelector(`#create-product-popup form`);
+    const cancelButtonPopup = document.querySelector(`#create-product-popup .popup-cancel-btn`);
+    const createButtonPopup = document.querySelector(`#create-product-popup .popup-create-btn`);
+    const form = document.querySelector(`#create-product-popup form`);
 
     createButtonPopup.addEventListener("click", () => {
         createNewProduct(form.elements);
