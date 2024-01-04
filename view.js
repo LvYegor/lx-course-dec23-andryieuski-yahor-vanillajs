@@ -1,0 +1,951 @@
+/**
+ * Represents a view for managing stores and products.
+ * @constructor
+ */
+function View() {
+    /**
+     * Represents the status name for "OK" status.
+     * @const {string}
+     */
+    const OK_STATUS_NAME = "OK";
+
+    /**
+     * Represents the status name for "STORAGE" status.
+     * @const {string}
+     */
+    const STORAGE_STATUS_NAME = "STORAGE";
+
+    /**
+     * Represents the status name for "OUT_OF_STOCK" status.
+     * @const {string}
+     */
+    const OUT_OF_STOCK_STATUS_NAME = "OUT_OF_STOCK";
+
+    /**
+     * Represents the class name for store list items.
+     * @const {string}
+     */
+    const storeListItemClassName = "store-list-item";
+
+    /**
+     * Represents the class name for selected background.
+     * @const {string}
+     */
+    const selectedBackgroundClassName = "selected-background";
+
+    /**
+     * Represents the class name for products list items.
+     * @const {string}
+     */
+    const productsListItemClassName = "products-list__list-item";
+
+    /**
+     * Represents the class name for grid name items.
+     * @const {string}
+     */
+    const gridNameItemClassName = "grid-container__name-item";
+
+    /**
+     * Represents the class name for bordered header.
+     * @const {string}
+     */
+    const borderedHeaderClassName = "bordered-header";
+
+    /**
+     * Represents the class name for bordered all filter.
+     * @const {string}
+     */
+    const borderedAllFilterClassName = "bordered-all-filter";
+
+    /**
+     * Represents the class name for hidden elements.
+     * @const {string}
+     */
+    const hiddenClassName = "hidden";
+
+    /**
+     * Represents the list of stores.
+     * @type {HTMLElement}
+     */
+    const storesList = document.querySelector("#sitebar-menu__list");
+
+    /**
+     * Represents the container for store details.
+     * @type {HTMLElement}
+     */
+    const storeDetailsContainer = document.querySelector("#store-details-container");
+
+    /**
+     * Represents the search input element.
+     * @type {HTMLInputElement}
+     */
+    const searchInput = document.querySelector("#search-input");
+
+    /**
+     * Represents the search button element.
+     * @type {HTMLElement}
+     */
+    const searchButton = document.querySelector("#search-button");
+
+    /**
+     * Represents the reset button element.
+     * @type {HTMLElement}
+     */
+    const resetButton = document.querySelector("#reset-button");
+
+    /**
+     * Represents the refresh button element.
+     * @type {HTMLElement}
+     */
+    const refreshButton = document.querySelector("#refresh-button");
+
+    /**
+     * Represents the search products input element.
+     * @type {HTMLInputElement}
+     */
+    const searchProductsInput = document.querySelector("#products-search-input");
+
+    /**
+     * Represents the search products button element.
+     * @type {HTMLElement}
+     */
+    const searchProductsButton = document.querySelector("#products-search-button");
+
+    /**
+     * Represents the reset products button element.
+     * @type {HTMLElement}
+     */
+    const resetProductsButton = document.querySelector("#products-reset-button");
+
+    /**
+     * Represents the refresh products button element.
+     * @type {HTMLElement}
+     */
+    const refreshProductsButton = document.querySelector("#products-refresh-button");
+
+    /**
+     * Represents the sitebar menu element.
+     * @type {HTMLElement}
+     */
+    const sitebarMenu = document.querySelector("#sitebar-menu");
+
+    /**
+     * Represents a collection of header items in the products list.
+     * @type {NodeList}
+     */
+    const headerItems = document.querySelectorAll(".products-list__header-item");
+
+    /**
+     * Represents the delete store button element.
+     * @type {HTMLElement}
+     */
+    const deleteStoreButton = document.querySelector("#delete-store-button");
+
+    /**
+     * Represents the update product popup element.
+     * @type {HTMLElement}
+     */
+    const updateProductPopup = document.querySelector("#edit-product-popup");
+
+    /**
+     * Represents the form for editing a product.
+     * @type {HTMLFormElement}
+     */
+    const editProductForm = document.querySelector("#edit-product-form");
+
+    /**
+     * Represents the form for creating a product.
+     * @type {HTMLFormElement}
+     */
+    const createProductForm = document.querySelector("#create-product-form");
+
+    /**
+     * Represents the form for creating a store.
+     * @type {HTMLFormElement}
+     */
+    const createStoreForm = document.querySelector("#create-store-form");
+
+    /**
+     * Represents the button for creating a store.
+     * @type {HTMLElement}
+     */
+    const createStoreButton = document.querySelector("#create-store-button");
+
+    /**
+     * Represents the dialog for creating a store.
+     * @type {HTMLElement}
+     */
+    const createStoreDialog = document.querySelector("#create-store-popup");
+
+    /**
+     * Represents the form for creating a new store within the store creation dialog.
+     * @type {HTMLFormElement}
+     */
+    const createNewStoreForm = document.querySelector(`#create-store-popup form`);
+
+    /**
+     * Represents the button for creating a product.
+     * @type {HTMLElement}
+     */
+    const createProductButton = document.querySelector("#create-product-button");
+
+    /**
+     * Represents the dialog for creating a product.
+     * @type {HTMLElement}
+     */
+    const createProductDialog = document.querySelector(`#create-product-popup`);
+
+    /**
+     * Represents the form for creating a new product within the product creation dialog.
+     * @type {HTMLFormElement}
+     */
+    const createNewProductForm = document.querySelector(`#create-product-popup form`);
+
+    /**
+     * Represents the button for filtering all products.
+     * @type {HTMLElement}
+     */
+    const filterButtonAll = document.querySelector("#button-all");
+
+    /**
+     * Represents the button for filtering products with "OK" status.
+     * @type {HTMLElement}
+     */
+    const filterButtonOk = document.querySelector("#button-ok");
+
+    /**
+     * Represents the button for filtering products with "STORAGE" status.
+     * @type {HTMLElement}
+     */
+    const filterButtonStorage = document.querySelector("#button-storage");
+
+    /**
+     * Represents the button for filtering products with "OUT_OF_STOCK" status.
+     * @type {HTMLElement}
+     */
+    const filterButtonOutOfStock = document.querySelector("#button-out-of-stock");
+
+
+    /**
+     * Retrieves the create product form element.
+     * @returns {HTMLFormElement} The create product form.
+     */
+    this.getCreateProductForm = () => {
+        return createProductForm;
+    };
+
+    /**
+     * Retrieves the create store form element.
+     * @returns {HTMLFormElement} The create store form.
+     */
+    this.getCreateStoreForm = () => {
+        return createStoreForm;
+    };
+
+    /**
+     * Retrieves the search input element.
+     * @returns {HTMLInputElement} The search input.
+     */
+    this.getSearchInput = () => {
+        return searchInput;
+    };
+
+    /**
+     * Retrieves the search products input element.
+     * @returns {HTMLInputElement} The search products input.
+     */
+    this.getSearchProductsInput = () => {
+        return searchProductsInput;
+    };
+
+    /**
+     * Retrieves the sitebar menu element.
+     * @returns {HTMLElement} The sitebar menu.
+     */
+    this.getSitebarMenu = () => {
+        return sitebarMenu;
+    };
+
+    /**
+     * Retrieves the store details container element.
+     * @returns {HTMLElement} The store details container.
+     */
+    this.getStoreDetailsContainer = () => {
+        return storeDetailsContainer;
+    };
+
+    /**
+     * Retrieves the search button element.
+     * @returns {HTMLElement} The search button.
+     */
+    this.getSearchButton = () => {
+        return searchButton;
+    };
+
+    /**
+     * Retrieves the filter button for all products element.
+     * @returns {HTMLElement} The filter button for all products.
+     */
+    this.getFilterButtonAll = () => {
+        return filterButtonAll;
+    };
+
+    /**
+     * Retrieves the filter button for "OK" status products element.
+     * @returns {HTMLElement} The filter button for "OK" status products.
+     */
+    this.getFilterButtonOk = () => {
+        return filterButtonOk;
+    };
+
+    /**
+     * Retrieves the filter button for "STORAGE" status products element.
+     * @returns {HTMLElement} The filter button for "STORAGE" status products.
+     */
+    this.getFilterButtonStorage = () => {
+        return filterButtonStorage;
+    };
+
+    /**
+     * Retrieves the filter button for "OUT_OF_STOCK" status products element.
+     * @returns {HTMLElement} The filter button for "OUT_OF_STOCK" status products.
+     */
+    this.getFilterButtonOutOfStock = () => {
+        return filterButtonOutOfStock;
+    };
+
+    /**
+     * Retrieves the search products button element.
+     * @returns {HTMLElement} The search products button.
+     */
+    this.getSearchProductsButton = () => {
+        return searchProductsButton;
+    };
+
+    /**
+     * Retrieves the reset button element.
+     * @returns {HTMLElement} The reset button.
+     */
+    this.getResetButton = () => {
+        return resetButton;
+    };
+
+    /**
+     * Retrieves the class name for hidden elements.
+     * @returns {string} The hidden class name.
+     */
+    this.getHiddenClassName = () => {
+        return hiddenClassName;
+    };
+
+    /**
+     * Retrieves the reset products button element.
+     * @returns {HTMLElement} The reset products button.
+     */
+    this.getResetProductsButton = () => {
+        return resetProductsButton;
+    };
+
+    /**
+     * Retrieves the delete store button element.
+     * @returns {HTMLElement} The delete store button.
+     */
+    this.getDeleteStoreButton = () => {
+        return deleteStoreButton;
+    };
+
+    /**
+     * Retrieves the collection of header items in the products list.
+     * @returns {NodeList} The header items.
+     */
+    this.getHeaderItems = () => {
+        return headerItems;
+    };
+
+    /**
+     * Retrieves the class name for selected background.
+     * @returns {string} The selected background class name.
+     */
+    this.getSelectedBackgroundClassName = () => {
+        return selectedBackgroundClassName;
+    };
+
+    /**
+     * Retrieves the create store button element.
+     * @returns {HTMLElement} The create store button.
+     */
+    this.getCreateStoreButton = () => {
+        return createStoreButton;
+    };
+
+    /**
+     * Retrieves the create store dialog element.
+     * @returns {HTMLElement} The create store dialog.
+     */
+    this.getCreateStoreDialog = () => {
+        return createStoreDialog;
+    };
+
+    /**
+     * Retrieves the form for creating a new store within the store creation dialog.
+     * @returns {HTMLFormElement} The create new store form.
+     */
+    this.getCreateNewStoreForm = () => {
+        return createNewStoreForm;
+    };
+
+    /**
+     * Retrieves the create product button element.
+     * @returns {HTMLElement} The create product button.
+     */
+    this.getCreateProductButton = () => {
+        return createProductButton;
+    };
+
+    /**
+     * Retrieves the create product dialog element.
+     * @returns {HTMLElement} The create product dialog.
+     */
+    this.getCreateProductDialog = () => {
+        return createProductDialog;
+    };
+
+    /**
+     * Retrieves the form for creating a new product within the product creation dialog.
+     * @returns {HTMLFormElement} The create new product form.
+     */
+    this.getCreateNewProductForm = () => {
+        return createNewProductForm;
+    };
+
+    /**
+     * Retrieves the update product popup element.
+     * @returns {HTMLElement} The update product popup.
+     */
+    this.getUpdateProductPopap = () => {
+        return updateProductPopup;
+    };
+
+    /**
+     * Retrieves the form for editing a product.
+     * @returns {HTMLFormElement} The edit product form.
+     */
+    this.getEditProductForm = () => {
+        return editProductForm;
+    };
+
+
+    /**
+     * Hides the refresh button and shows the reset button.
+     */
+    this.hideRefreshShowResetButtons = () => {
+        refreshButton.classList.add(hiddenClassName);
+        resetButton.classList.remove(hiddenClassName);
+    };
+
+    /**
+     * Hides the reset button and shows the refresh button.
+     */
+    this.hideResetShowRefreshButtons = () => {
+        refreshButton.classList.remove(hiddenClassName);
+        resetButton.classList.add(hiddenClassName);
+    };
+
+    /**
+     * Hides the refresh products button and shows the reset products button.
+     */
+    this.hideRefreshShowResetProductsButtons = () => {
+        refreshProductsButton.classList.add(hiddenClassName);
+        resetProductsButton.classList.remove(hiddenClassName);
+    };
+
+    /**
+     * Hides the reset products button and shows the refresh products button.
+     */
+    this.hideResetShowRefreshProductsButtons = () => {
+        refreshProductsButton.classList.remove(hiddenClassName);
+        resetProductsButton.classList.add(hiddenClassName);
+    };
+
+    /**
+     * Handles the visibility of the empty stores list icon based on the provided data.
+     * @param {Array} data - The data to determine if the stores list is empty.
+     */
+    this.handleEmptyStoresList = (data) => {
+        const emptyStoresListIcon = document.querySelector("#empty-stores-list-icon");
+
+        if (!data || !data.length) {
+            emptyStoresListIcon.classList.remove(hiddenClassName);
+        } else {
+            emptyStoresListIcon.classList.add(hiddenClassName);
+        }
+    };
+
+    /**
+     * Handles the scrolling behavior of the sitebar menu.
+     */
+    this.handleSitebarMenuScroll = () => {
+        const upButton = document.querySelector("#stores-list-up-button");
+        const downButton = document.querySelector("#stores-list-down-button");
+        const pinButton = document.querySelector("#stores-list-pin-button");
+        const controlButtons = document.querySelector("#stores-list-control-buttons");
+        const sitebarMenuHeader = document.querySelector("#sitebar-menu__header");
+
+        const distanceFromTop = controlButtons.getBoundingClientRect().top;
+
+        if (distanceFromTop <= 44) {
+            upButton.classList.add(hiddenClassName);
+            downButton.classList.remove(hiddenClassName);
+            pinButton.classList.add(hiddenClassName);
+            sitebarMenuHeader.classList.add(borderedHeaderClassName);
+        } else {
+            upButton.classList.remove(hiddenClassName);
+            downButton.classList.add(hiddenClassName);
+            pinButton.classList.remove(hiddenClassName);
+            sitebarMenuHeader.classList.remove(borderedHeaderClassName);
+        }
+    };
+
+    /**
+     * Handles the scrolling behavior of the store details container.
+     */
+    this.handleStoreDetailsContainerScroll = () => {
+        const upButton = document.querySelector("#stores-details-up-button");
+        const downButton = document.querySelector("#stores-details-down-button");
+        const pinButton = document.querySelector("#stores-details-pin-button");
+        const controlButtons = document.querySelector("#control-buttons");
+
+        const distanceFromTop = controlButtons.getBoundingClientRect().top;
+
+        if (distanceFromTop <= 44) {
+            upButton.classList.add(hiddenClassName);
+            downButton.classList.remove(hiddenClassName);
+            pinButton.classList.add(hiddenClassName);
+        } else {
+            upButton.classList.remove(hiddenClassName);
+            downButton.classList.add(hiddenClassName);
+            pinButton.classList.remove(hiddenClassName);
+        }
+    };
+
+    /**
+     * Resets the data-is-active attribute of filter buttons to "false".
+     */
+    this.resetFilterButtonsAttribute = () => {
+        filterButtonAll.setAttribute("data-is-active", "false");
+        filterButtonOk.setAttribute("data-is-active", "false");
+        filterButtonStorage.setAttribute("data-is-active", "false");
+        filterButtonOutOfStock.setAttribute("data-is-active", "false");
+    };
+
+    /**
+     * Sets the data-is-active attribute of the filterButtonAll based on the provided boolean.
+     * @param {boolean} should - If true, sets data-is-active to "true" and adds a bordered class; otherwise, removes the bordered class.
+     */
+    this.shouldSetFilterButtonAllToTrue = (should) => {
+        if (should) {
+            filterButtonAll.setAttribute("data-is-active", "true");
+            filterButtonAll.classList.add(borderedAllFilterClassName);
+        } else {
+            filterButtonAll.classList.remove(borderedAllFilterClassName);
+        }
+    };
+
+    /**
+     * Resets the sorting buttons styles in the headerItems.
+     */
+    this.setDefaultSortButtons = () => {
+        headerItems.forEach(item => {
+            item.classList.remove("ascending", "descending");
+
+            const buttons = item.querySelectorAll(".sort-buttons div");
+            buttons.forEach(button => button.classList.add(hiddenClassName));
+            if (buttons && buttons.length > 0) {
+                buttons[0].classList.remove(hiddenClassName);
+            }
+        });
+    };
+
+    /**
+     * Generates and displays the stores list based on the provided data.
+     * @param {Array} data - The data to generate the stores list.
+     */
+    this.generateStoresList = (data) => {
+        this.handleEmptyStoresList(data);
+
+        const activeStoreID = document.querySelector("#store-details-container").dataset.storeId;
+
+        data.forEach(item => {
+            const storesListItem = document.createElement("li");
+            storesListItem.className = storeListItemClassName;
+            storesListItem.id = `store-list-item-${item.id}`;
+
+            if (+activeStoreID === +item.id) {
+                storesListItem.classList.add(selectedBackgroundClassName);
+            }
+
+            const infoDiv = document.createElement("div");
+            infoDiv.className = "store-list-item__info";
+
+            const nameHeader = document.createElement("h4");
+            nameHeader.textContent = item.Name;
+
+            const locationParam = document.createElement("p");
+            locationParam.className = "store-location";
+            locationParam.textContent = item.Address;
+
+            infoDiv.appendChild(nameHeader);
+            infoDiv.appendChild(locationParam);
+
+            const areaDiv = document.createElement("div");
+            areaDiv.className = "store-list-item__area";
+
+            const areaHeader = document.createElement("h4");
+            areaHeader.textContent = item.FloorArea;
+
+            const areaUnitPara = document.createElement("p");
+            areaUnitPara.className = "area-unit";
+            areaUnitPara.textContent = "sq.m";
+
+            areaDiv.appendChild(areaHeader);
+            areaDiv.appendChild(areaUnitPara);
+
+            storesListItem.appendChild(infoDiv);
+            storesListItem.appendChild(areaDiv);
+
+            storesList.appendChild(storesListItem);
+        });
+    };
+
+    /**
+     * Resets the styles of the store list items.
+     */
+    this.resetStoreListStyles = () => {
+        const storeItems = document.querySelectorAll(`.${storeListItemClassName}`);
+        storeItems.forEach(item => item.classList.remove(selectedBackgroundClassName));
+    };
+
+    /**
+     * Displays the details of the store with the provided ID.
+     * @param {number} id - The ID of the store to display details for.
+     */
+    this.displayStoreDetails = (id) => {
+        storeDetailsContainer.dataset.storeId = id;
+
+        const notSelectedDetailsTitle = document.querySelector("#not-selected-details-title");
+        notSelectedDetailsTitle.classList.add(hiddenClassName);
+
+        const detailsTitle = document.querySelector("#details-title");
+        detailsTitle.classList.remove(hiddenClassName);
+
+        const storeDetailsTableRequisitesLeft = document.querySelector("#store-details-table__requisites-left");
+        storeDetailsTableRequisitesLeft.classList.remove(hiddenClassName);
+
+        const storeDetailsTableRequisitesRight = document.querySelector("#store-details-table__requisites-right");
+        storeDetailsTableRequisitesRight.classList.remove(hiddenClassName);
+
+        const controlButtons = document.querySelector("#control-buttons");
+        controlButtons.classList.remove(hiddenClassName);
+
+        const storeDetails = document.querySelector("#store-details");
+        storeDetails.classList.remove(hiddenClassName);
+
+        const productsList = document.querySelector("#products-list");
+        productsList.classList.remove(hiddenClassName);
+
+        const notSelectedItemMessage = document.querySelector("#not-selected-item-message");
+        notSelectedItemMessage.classList.add(hiddenClassName);
+
+        const detailsFooter = document.querySelector("#footer-menu-details");
+        detailsFooter.classList.remove(hiddenClassName);
+    };
+
+
+    /**
+     * Hides the store details by updating the display of relevant elements.
+     */
+    this.hideStoreDetails = () => {
+        const notSelectedDetailsTitle = document.querySelector("#not-selected-details-title");
+        notSelectedDetailsTitle.classList.remove(hiddenClassName);
+
+        const detailsTitle = document.querySelector("#details-title");
+        detailsTitle.classList.add(hiddenClassName);
+
+        const storeDetailsTableRequisitesLeft = document.querySelector("#store-details-table__requisites-left");
+        storeDetailsTableRequisitesLeft.classList.add(hiddenClassName);
+
+        const storeDetailsTableRequisitesRight = document.querySelector("#store-details-table__requisites-right");
+        storeDetailsTableRequisitesRight.classList.add(hiddenClassName);
+
+        const controlButtons = document.querySelector("#control-buttons");
+        controlButtons.classList.add(hiddenClassName);
+
+        const storeDetails = document.querySelector("#store-details");
+        storeDetails.classList.add(hiddenClassName);
+
+        const productsList = document.querySelector("#products-list");
+        productsList.classList.add(hiddenClassName);
+
+        const notSelectedItemMessage = document.querySelector("#not-selected-item-message");
+        notSelectedItemMessage.classList.remove(hiddenClassName);
+
+        const detailsFooter = document.querySelector("#footer-menu-details");
+        detailsFooter.classList.add(hiddenClassName);
+    };
+
+    /**
+     * Fills the store details section with the provided store details data.
+     * @param {object} storeDetailsData - The store details data to be displayed.
+     */
+    this.fillStoreDetails = (storeDetailsData) => {
+        const emailElement = document.querySelector("#email");
+        emailElement.textContent = storeDetailsData.Email;
+
+        const phoneNumberElement = document.querySelector("#phone-number");
+        phoneNumberElement.textContent = storeDetailsData.PhoneNumber;
+
+        const addressElement = document.querySelector("#address");
+        addressElement.textContent = storeDetailsData.Address;
+
+        const establishedDateElement = document.querySelector("#established-date");
+        const establishedDate = new Date(storeDetailsData.Established);
+        establishedDateElement.textContent = establishedDate.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        });
+
+        const floorAreaElement = document.querySelector("#floor-area");
+        floorAreaElement.textContent = storeDetailsData.FloorArea;
+    };
+
+    /**
+     * Updates the content of a filter element with the provided value.
+     * @param {string} filterId - The ID of the filter element to update.
+     * @param {any} value - The value to update the filter element with.
+     */
+    this.updateFilterElement = (filterId, value) => {
+        const filterElement = document.querySelector(`#${filterId}`);
+        if (filterElement) {
+            filterElement.textContent = String(value);
+        }
+    };
+
+    /**
+     * Fills the amount filters based on the provided array of products.
+     * @param {Array} currentRelProducts - The array of products to calculate amounts for each status.
+     */
+    this.fillAmountFilter = (currentRelProducts) => {
+        const allFilter = document.querySelector("#amount-all-filter");
+
+        let okAmount = 0;
+        let storageAmount = 0;
+        let outOfStockAmount = 0;
+
+        allFilter.textContent = String(currentRelProducts.length);
+        currentRelProducts.forEach(item => {
+            if (item.Status === OK_STATUS_NAME) {
+                okAmount++;
+            } else if (item.Status === STORAGE_STATUS_NAME) {
+                storageAmount++;
+            } else if (item.Status === OUT_OF_STOCK_STATUS_NAME) {
+                outOfStockAmount++;
+            }
+        });
+
+        this.updateFilterElement("amount-ok-filter", okAmount);
+        this.updateFilterElement("amount-storage-filter", storageAmount);
+        this.updateFilterElement("amount-out-of-stock-filter", outOfStockAmount);
+    };
+
+    /**
+     * Clears the product rows from the products list.
+     */
+    this.clearProductsList = () => {
+        const productsList = document.querySelector("#products-list");
+
+        const productRows = productsList.querySelectorAll(".products-list__list-row");
+
+        productRows.forEach(row => {
+            row.parentNode.removeChild(row);
+        });
+    };
+
+    /**
+     * Creates and returns a product info div for a product row.
+     * @param {HTMLElement} productRow - The product row to append the info div to.
+     * @param {object} item - The product data.
+     * @param {string} property - The property of the product to display.
+     */
+    this.createProductInfoDiv = (productRow, item, property) => {
+        const productInfoDiv = document.createElement("div");
+        productInfoDiv.className = "products-list__list-item ellipsis center-item";
+        productInfoDiv.title = item[property];
+
+        const productInfo = document.createElement("p");
+        productInfo.className = "ellipsis";
+        productInfo.textContent = item[property];
+
+        productInfoDiv.appendChild(productInfo);
+
+        productRow.appendChild(productInfoDiv);
+    };
+
+    /**
+     * Creates and returns a product name div for a product row.
+     * @param {HTMLElement} productRow - The product row to append the name div to.
+     * @param {object} item - The product data.
+     */
+    this.createProductNameDiv = (productRow, item) => {
+        const productNameDiv = document.createElement("div");
+        productNameDiv.className = `${productsListItemClassName} ${gridNameItemClassName}`;
+
+        const productName = document.createElement("b");
+        productName.className = "text-wrapping";
+        productName.title = item.Name;
+        productName.textContent = item.Name;
+
+        const productID = document.createElement("p");
+        productID.className = "product_id";
+        productID.textContent = item.id;
+
+        productNameDiv.appendChild(productName);
+        productNameDiv.appendChild(productID);
+
+        productRow.appendChild(productNameDiv);
+    };
+
+    /**
+     * Creates and returns a product price div for a product row.
+     * @param {HTMLElement} productRow - The product row to append the price div to.
+     * @param {object} item - The product data.
+     */
+    this.createProductPriceDiv = (productRow, item) => {
+        const productPriceDiv = document.createElement("div");
+        productPriceDiv.className = "products-list__list-item";
+        productPriceDiv.title = `${item.Price} USD`;
+
+        const productPrice = document.createElement("b");
+        productPrice.textContent = item.Price;
+
+        const productPriceUnit = document.createElement("p");
+        productPriceUnit.textContent = "USD";
+
+        productPriceDiv.appendChild(productPrice);
+        productPriceDiv.appendChild(productPriceUnit);
+
+        productRow.appendChild(productPriceDiv);
+    };
+
+    /**
+     * Creates and returns a product rating div for a product row.
+     * @param {HTMLElement} productRow - The product row to append the rating div to.
+     * @param {object} item - The product data.
+     */
+    this.createProductRatingDiv = (productRow, item) => {
+        const productRatingDiv = document.createElement("div");
+        productRatingDiv.className = "products-list__list-item product-rating center-item";
+        productRatingDiv.title = item.Rating;
+        productRatingDiv.dataset.rating = item.Rating;
+
+        const emptyStartsAmount = 5 - item.Rating;
+
+        for (let i = 0; i < item.Rating; i++) {
+            const starFull = document.createElement("i");
+            starFull.className = "star-size star-full fa-solid fa-star";
+            productRatingDiv.appendChild(starFull);
+        }
+
+        for (let i = 0; i < emptyStartsAmount; i++) {
+            let starRegular = document.createElement("i");
+            starRegular.className = "star-size fa-regular fa-star";
+            productRatingDiv.appendChild(starRegular);
+        }
+
+        productRow.appendChild(productRatingDiv);
+    };
+
+    /**
+     * Creates and returns a button div for a product row.
+     * @param {HTMLElement} productRow - The product row to append the button div to.
+     * @param {string} buttonClassName - The class name for the button.
+     * @param {string} buttonIconClassName - The class name for the button icon.
+     */
+    this.createButtonDiv = (productRow, buttonClassName, buttonIconClassName) => {
+        const buttonDiv = document.createElement("div");
+        buttonDiv.className = "products-list__list-item ellipsis center-item";
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = buttonClassName;
+        button.id = productRow.id;
+
+        const buttonIcon = document.createElement("i");
+        buttonIcon.className = buttonIconClassName;
+        button.appendChild(buttonIcon);
+
+        buttonDiv.appendChild(button);
+
+        productRow.appendChild(buttonDiv);
+    };
+
+    /**
+     * Creates and returns a product row for the products list.
+     * @param {object} item - The product data.
+     * @returns {HTMLElement} - The created product row.
+     */
+    this.createProductRow = (item) => {
+        const productRow = document.createElement("div");
+        productRow.className = "products-list__list-row";
+        productRow.dataset.productId = item.id;
+
+        this.createProductNameDiv(productRow, item);
+        this.createProductPriceDiv(productRow, item);
+        this.createProductInfoDiv(productRow, item, "Specs");
+        this.createProductInfoDiv(productRow, item, "SupplierInfo");
+        this.createProductInfoDiv(productRow, item, "MadeIn");
+        this.createProductInfoDiv(productRow, item, "ProductionCompanyName");
+        this.createProductRatingDiv(productRow, item);
+        this.createButtonDiv(productRow, "update-products-btn", "fa-solid fa-pen-to-square");
+        this.createButtonDiv(productRow, "delete-products-btn", "fa-regular fa-circle-xmark");
+
+        return productRow;
+    };
+
+    /**
+     * Fills the products list with the provided array of products.
+     * @param {Array} currentRelProducts - The array of products to fill the list with.
+     */
+    this.fillProductsList = (currentRelProducts) => {
+        const productsList = document.querySelector("#products-list");
+
+        currentRelProducts.forEach(item => {
+            const productRow = this.createProductRow(item);
+            productsList.appendChild(productRow);
+        });
+    };
+
+    /**
+     * Clears the store list items from the stores list.
+     */
+    this.clearStoresList = () => {
+        const storesItems = storesList.querySelectorAll(`.${storeListItemClassName}`);
+
+        storesItems.forEach(item => {
+            item.parentNode.removeChild(item);
+        });
+    };
+
+    /**
+     * Fills the form in the product data section with the provided data.
+     * @param {object} data - The data to fill the form with.
+     */
+    this.fillFormProductData = data => {
+        const elements = editProductForm.elements;
+        for (let key1 in data) {
+            if (elements[key1]) {
+                elements[key1].value = data[key1];
+            }
+        }
+    };
+}
