@@ -38,30 +38,31 @@ function Controller(view, model) {
      * Initializes the controller by setting up event listeners and fetching initial data.
      */
     this.init = () => {
-        model.fetchStores()
-            .then((stores) => {
-                view.clearStoresList();
-                view.generateStoresList(stores);
-                this.addOnStoreListItemClickListener();
-            });
+        this.refreshStores();
 
         view.getSearchInput().addEventListener("input", function () {
             if (this.value !== "") {
-                view.hideRefreshShowResetButtons();
+                view.switchButtons(view.getResetButton(), view.getRefreshButton());
             }
         });
 
-        view.getSearchInput().addEventListener("focus", view.hideRefreshShowResetButtons);
+        view.getSearchInput().addEventListener(
+            "focus",
+            () => view.switchButtons(view.getResetButton(), view.getRefreshButton())
+        );
 
         view.getSearchProductsInput().addEventListener("input", function () {
             if (this.value !== "") {
-                view.hideRefreshShowResetProductsButtons();
+                view.switchButtons(view.getResetProductsButton(), view.getRefreshProductsButton());
             }
         });
 
-        view.getSearchProductsInput().addEventListener("focus", view.hideRefreshShowResetProductsButtons);
+        view.getSearchProductsInput().addEventListener(
+            "focus",
+            () => view.switchButtons(view.getResetProductsButton(), view.getRefreshProductsButton())
+        );
 
-        view.getSitebarMenu().addEventListener("scroll", view.handleSitebarMenuScroll);
+        view.getSidebarMenu().addEventListener("scroll", view.handleSidebarMenuScroll);
 
         view.getStoreDetailsContainer().addEventListener("scroll", view.handleStoreDetailsContainerScroll);
 
@@ -85,7 +86,11 @@ function Controller(view, model) {
 
         view.getResetProductsButton().addEventListener("click", this.onResetProductsButtonClick);
 
-        view.getDeleteStoreButton().addEventListener("click", this.onDeleteStoreButtonClick);
+        view.getDeleteStoreButton().addEventListener("click", () => view.getDeleteStoreDialog().showModal());
+
+        view.getDeleteStoreCancelButton().addEventListener("click", () => view.getDeleteStoreDialog().close());
+
+        view.getDeleteStoreOkButton().addEventListener("click", () => this.onDeleteStoreOkButtonClick());
 
         view.getHeaderItems().forEach(headerItem => {
             headerItem.addEventListener("click", () => this.onProductHeaderItemClick(headerItem));
@@ -105,14 +110,14 @@ function Controller(view, model) {
 
         view.getEditProductForm().addEventListener("submit", this.onSubmitEditProductClick);
 
-        view.getEditProductForm().addEventListener("reset", () => view.getUpdateProductPopap().close());
+        view.getEditProductForm().addEventListener("reset", () => view.getUpdateProductPopup().close());
     };
 
     /**
      * Handles the click event on the search button.
      */
     this.onSearchButtonClick = () => {
-        const inputValue = view.getSearchInput().value.toLowerCase();
+        const inputValue = (view.getSearchInput().value || "").trim().toLowerCase();
 
         if (inputValue) {
             model.fetchFilteredStores(inputValue).then(stores => {
@@ -120,17 +125,15 @@ function Controller(view, model) {
                 view.generateStoresList(stores);
                 this.addOnStoreListItemClickListener();
             });
+        } else {
+            this.refreshStores();
         }
-
     };
 
     /**
      * Handles the click event on the "Filter All" button.
      */
     this.onFilterButtonAllClick = () => {
-        view.setDefaultSortButtons();
-        model.setCurrentOrderMode(null);
-
         view.resetFilterButtonsAttribute();
         view.shouldSetFilterButtonAllToTrue(true);
 
@@ -143,9 +146,6 @@ function Controller(view, model) {
      * @param {HTMLElement} filterButton - The filter button element.
      */
     this.onFilterButtonClick = (filterButton) => {
-        view.setDefaultSortButtons();
-        model.setCurrentOrderMode(null);
-
         const currentStatus = filterButton.getAttribute("data-is-active");
 
         view.resetFilterButtonsAttribute();
@@ -162,13 +162,8 @@ function Controller(view, model) {
      */
     this.onSearchProductsButtonClick = () => {
         const localInputValue = (view.getSearchProductsInput().value || "").trim().toLowerCase();
-
-        view.setDefaultSortButtons();
         model.setCurrentProductsSearchInputValue(localInputValue);
-        model.setCurrentOrderMode(null);
-
         this.refreshFilteredStoreProductsById(model.getCurrentStoreData().id);
-
     };
 
     /**
@@ -196,43 +191,35 @@ function Controller(view, model) {
      */
     this.onResetButtonClick = () => {
         view.getSearchInput().value = "";
-        model.fetchStores()
-            .then((stores) => {
-                view.clearStoresList();
-                view.generateStoresList(stores);
-                this.addOnStoreListItemClickListener();
-            });
-
-        view.hideResetShowRefreshButtons();
+        this.refreshStores();
+        view.switchButtons(view.getRefreshButton(), view.getResetButton());
     };
 
     /**
      * Handles the click event on the reset products button.
      */
     this.onResetProductsButtonClick = () => {
-        this.refreshStoreProductsById(model.getCurrentStoreData().id);
-        view.hideResetShowRefreshProductsButtons();
+        model.setCurrentProductsSearchInputValue(null);
+        view.getSearchProductsInput().value = "";
+        this.refreshFilteredStoreProductsById(model.getCurrentStoreData().id);
+        view.switchButtons(view.getRefreshProductsButton(), view.getResetProductsButton());
     };
 
     /**
      * Handles the click event on the delete store button.
      */
-    this.onDeleteStoreButtonClick = () => {
-        const confirmed = confirm("Are you sure you want to remove the store?");
-        if (confirmed) {
-            model.deleteStoreById(model.getCurrentStoreData().id).then(response => {
-                if (response.ok) {
-                    model.setCurrentStoreData(null);
-                    model.fetchStores().then((stores) => {
-                        view.clearStoresList();
-                        view.generateStoresList(stores);
-                        this.addOnStoreListItemClickListener();
-                    });
-                    view.hideStoreDetails();
-                }
-            });
-        }
+    this.onDeleteStoreOkButtonClick = () => {
+        model.deleteStoreById(model.getCurrentStoreData().id).then(response => {
+            if (response.ok) {
+                model.setCurrentStoreData(null);
+                this.refreshStores();
+                view.hideStoreDetails();
+                view.getDeleteStoreDialog().close()
+                view.showToastNotificationWithAutoClose("The store has been successfully deleted!");
+            }
+        });
     };
+
 
     /**
      * Handles the click event on a product header item.
@@ -249,27 +236,27 @@ function Controller(view, model) {
             "Rating"
         ];
 
-        const sortButtons = headerItem.querySelectorAll(".sort-buttons div");
-        const isAscending = headerItem.classList.contains("ascending");
-        const isDescending = headerItem.classList.contains("descending");
+        const sortButtons = view.getSortButtons(headerItem);
+        const isAscending = view.isContainsClassName(headerItem, "ascending");
+        const isDescending = view.isContainsClassName(headerItem, "descending");
         const columnIndex = Array.from(headerItem.parentElement.children).indexOf(headerItem);
         const currentStoreId = model.getCurrentStoreData().id;
 
         view.setDefaultSortButtons();
 
-        sortButtons.forEach(button => button.classList.add(view.getHiddenClassName()));
+        sortButtons.forEach(button => view.addClassName(button, view.getHiddenClassName()));
 
         if (!isAscending &amp;&amp; !isDescending) {
-            headerItem.classList.add("ascending");
-            sortButtons[1].classList.remove(view.getHiddenClassName());
+            view.addClassName(headerItem, "ascending");
+            view.removeClassName(sortButtons[1], view.getHiddenClassName());
             model.setCurrentOrderMode(`${headerNames[columnIndex]} Asc`);
         } else if (isAscending) {
-            headerItem.classList.remove("ascending");
-            headerItem.classList.add("descending");
-            sortButtons[2].classList.remove(view.getHiddenClassName());
+            view.removeClassName(headerItem, "ascending");
+            view.addClassName(headerItem, "descending");
+            view.removeClassName(sortButtons[2], view.getHiddenClassName());
             model.setCurrentOrderMode(`${headerNames[columnIndex]} Desc`);
         } else {
-            sortButtons[0].classList.remove(view.getHiddenClassName());
+            view.removeClassName(sortButtons[0], view.getHiddenClassName());
             model.setCurrentOrderMode(null);
         }
 
@@ -282,14 +269,12 @@ function Controller(view, model) {
     this.onCreateStoreButtonPopup = () => {
         model.createNewStore(view.getCreateNewStoreForm().elements).then(response => {
             if (response.ok) {
-                model.fetchStores().then((stores) => {
-                    view.clearStoresList();
-                    view.generateStoresList(stores);
-                    this.addOnStoreListItemClickListener();
-                });
+                this.refreshStores();
+                view.getCreateStoreForm().reset();
+                view.getCreateStoreDialog().close();
+                view.showToastNotificationWithAutoClose("The store has been successfully created!");
             }
         });
-        view.getCreateStoreDialog().close();
     };
 
     /**
@@ -299,27 +284,40 @@ function Controller(view, model) {
         model.createNewProduct(view.getCreateNewProductForm().elements).then(response => {
             if (response.ok) {
                 this.refreshStoreProductsById(model.getCurrentStoreData().id);
+                view.getCreateProductForm().reset();
+                view.getCreateProductDialog().close();
+                view.showToastNotificationWithAutoClose("The product has been successfully created!");
             }
         });
-        view.getCreateProductDialog().close();
     };
 
     /**
      * Adds event listeners for update product button clicks.
      */
     this.addOnUpdateProductButtonClickListener = () => {
-        document.querySelectorAll(".update-products-btn").forEach((item) => {
+        view.getEditProductButtons().forEach((item) => {
             item.addEventListener("click", (event) => this.onUpdateProductButtonClick(event));
         });
+
     };
 
     /**
      * Adds event listeners for delete product button clicks.
      */
     this.addDeleteProductButtonClickListener = () => {
-        document.querySelectorAll(".delete-products-btn").forEach((item) => {
-            item.addEventListener("click", (event) => this.onDeleteProductButtonClick(event));
+        view.getDeleteProductButtons().forEach((item) => {
+            item.addEventListener("click", this.onDeleteProductButtonClick);
         });
+    };
+
+    view.getDeleteProductCancelButton().addEventListener("click", () => view.getDeleteProductDialog().close());
+
+    view.getDeleteProductOkButton().addEventListener("click", () => this.onDeleteProductOkButtonClick());
+
+    this.onDeleteProductButtonClick = (event) => {
+        const productId = +event.target.closest("[data-product-id]").getAttribute("data-product-id");
+        model.setSelectedProductId(productId);
+        view.getDeleteProductDialog().showModal()
     };
 
     /**
@@ -327,7 +325,7 @@ function Controller(view, model) {
      * @param {Event} event - The click event object.
      */
     this.onUpdateProductButtonClick = (event) => {
-        const editProductPopup = view.getUpdateProductPopap();
+        const editProductPopup = view.getUpdateProductPopup();
         editProductPopup.showModal();
         const productId = +event.target.closest("[data-product-id]").getAttribute("data-product-id");
         model.setSelectedProductId(productId);
@@ -339,45 +337,47 @@ function Controller(view, model) {
      */
     this.onSubmitEditProductClick = () => {
         const form = view.getEditProductForm();
-
         model.updateProduct(form.elements, model.getSelectedProductId()).then(response => {
             if (response.ok) {
                 this.refreshStoreProductsById(model.getCurrentStoreData().id);
                 form.reset();
+                view.showToastNotificationWithAutoClose("The product has been successfully updated!");
             }
         });
     };
 
     /**
      * Handles the click event on the delete product button.
-     * @param {Event} event - The click event object.
      */
-    this.onDeleteProductButtonClick = (event) => {
-        const confirmed = confirm("Are you sure you want to remove the product?");
-        if (confirmed) {
-            const productId = +event.target.closest("[data-product-id]").getAttribute("data-product-id");
-            model.deleteProductFromStoreById(productId).then(response => {
-                if (response.ok) {
-                    this.refreshStoreProductsById(model.getCurrentStoreData().id);
-                }
-            });
-        }
+    this.onDeleteProductOkButtonClick = () => {
+        model.deleteProductFromStoreById(model.getSelectedProductId()).then(response => {
+            if (response.ok) {
+                this.refreshFilteredStoreProductsById(model.getCurrentStoreData().id);
+                view.getDeleteProductDialog().close();
+                view.showToastNotificationWithAutoClose("The product has been successfully deleted!");
+            }
+        });
     };
 
     /**
      * Adds event listeners for store list item clicks.
      */
     this.addOnStoreListItemClickListener = () => {
-        document.querySelectorAll(".store-list-item").forEach((item) => {
-            item.addEventListener("click", (event) => {
-                view.resetStoreListStyles();
-
-                this.onStoreListItemClick(event.currentTarget.id);
-
-                event.currentTarget.classList.add(view.getSelectedBackgroundClassName());
-            });
+        view.getStoreListItems().forEach((item) => {
+            item.addEventListener("click", this.onStoreListItemClickCallback);
         });
     };
+
+    /**
+     * Callback function for store list item click.
+     * @param {Event} event - The ID of the clicked store list item.
+     */
+    this.onStoreListItemClickCallback = (event) => {
+        view.resetStoreListStyles();
+        this.onStoreListItemClick(event.currentTarget.id);
+        view.addClassName(event.currentTarget, view.getSelectedBackgroundClassName());
+    };
+
 
     /**
      * Handles the click event on a store list item.
@@ -444,7 +444,19 @@ function Controller(view, model) {
                 this.addOnUpdateProductButtonClickListener();
             });
     };
+
+    /**
+     * Refreshes the list of stores by fetching data from the model.
+     */
+    this.refreshStores = () => {
+        model.fetchStores().then((stores) => {
+            view.clearStoresList();
+            view.generateStoresList(stores);
+            this.addOnStoreListItemClickListener();
+        });
+    };
 }
+
 
 // Initialize the Controller with a new View and Model
 new Controller(new View(), new Model()).init();</code></pre>
@@ -463,7 +475,7 @@ new Controller(new View(), new Model()).init();</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jan 04 2024 17:17:17 GMT+0300 (Москва, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 08 2024 12:43:07 GMT+0300 (Москва, стандартное время)
 </footer>
 
 <script> prettyPrint(); </script>

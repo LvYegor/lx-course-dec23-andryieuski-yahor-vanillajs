@@ -95,7 +95,7 @@ function View() {
      * Represents the list of stores.
      * @type {HTMLElement}
      */
-    const storesList = document.querySelector("#sitebar-menu__list");
+    const storesList = document.querySelector("#sidebar-menu__list");
 
     /**
      * Represents the container for store details.
@@ -152,10 +152,10 @@ function View() {
     const refreshProductsButton = document.querySelector("#products-refresh-button");
 
     /**
-     * Represents the sitebar menu element.
+     * Represents the sidebar menu element.
      * @type {HTMLElement}
      */
-    const sitebarMenu = document.querySelector("#sitebar-menu");
+    const sidebarMenu = document.querySelector("#sidebar-menu");
 
     /**
      * Represents a collection of header items in the products list.
@@ -206,6 +206,24 @@ function View() {
     const createStoreDialog = document.querySelector("#create-store-popup");
 
     /**
+     * Represents the dialog for deleting a store.
+     * @type {HTMLElement}
+     */
+    const deleteStoreDialog = document.querySelector("#delete-store-popup");
+
+    /**
+     * Represents the button for confirming store deletion.
+     * @type {HTMLElement}
+     */
+    const deleteStoreOkButton = document.querySelector("#delete-store-ok");
+
+    /**
+     * Represents the button for canceling store deletion.
+     * @type {HTMLElement}
+     */
+    const deleteStoreCancelButton = document.querySelector("#delete-store-cancel");
+
+    /**
      * Represents the form for creating a new store within the store creation dialog.
      * @type {HTMLFormElement}
      */
@@ -222,6 +240,25 @@ function View() {
      * @type {HTMLElement}
      */
     const createProductDialog = document.querySelector(`#create-product-popup`);
+
+    /**
+     * Represents the dialog for deleting a product.
+     * @type {HTMLElement}
+     */
+    const deleteProductDialog = document.querySelector("#delete-product-popup");
+
+    /**
+     * Represents the button for confirming product deletion.
+     * @type {HTMLElement}
+     */
+    const deleteProductOkButton = document.querySelector("#delete-product-ok");
+
+    /**
+     * Represents the button for canceling product deletion.
+     * @type {HTMLElement}
+     */
+    const deleteProductCancelButton = document.querySelector("#delete-product-cancel");
+
 
     /**
      * Represents the form for creating a new product within the product creation dialog.
@@ -252,6 +289,87 @@ function View() {
      * @type {HTMLElement}
      */
     const filterButtonOutOfStock = document.querySelector("#button-out-of-stock");
+
+    /**
+     * Returns the button for confirming store deletion.
+     * @returns {HTMLElement} The delete store OK button.
+     */
+    this.getDeleteStoreOkButton = () => {
+        return deleteStoreOkButton;
+    };
+
+    /**
+     * Returns the button for canceling store deletion.
+     * @returns {HTMLElement} The delete store cancel button.
+     */
+    this.getDeleteStoreCancelButton = () => {
+        return deleteStoreCancelButton;
+    };
+
+    /**
+     * Returns the dialog for deleting a store.
+     * @returns {HTMLElement} The delete store dialog.
+     */
+    this.getDeleteStoreDialog = () => {
+        return deleteStoreDialog;
+    };
+
+    /**
+     * Returns the button for confirming product deletion.
+     * @returns {HTMLElement} The delete product OK button.
+     */
+    this.getDeleteProductOkButton = () => {
+        return deleteProductOkButton;
+    };
+
+    /**
+     * Returns the button for canceling product deletion.
+     * @returns {HTMLElement} The delete product cancel button.
+     */
+    this.getDeleteProductCancelButton = () => {
+        return deleteProductCancelButton;
+    };
+
+    /**
+     * Returns the dialog for deleting a product.
+     * @returns {HTMLDialogElement} The delete product dialog.
+     */
+    this.getDeleteProductDialog = () => {
+        return deleteProductDialog;
+    };
+
+    /**
+     * Returns an array of sort buttons within a given header item.
+     * @param {HTMLElement} headerItem - The header item containing sort buttons.
+     * @returns {NodeList} The NodeList of sort buttons.
+     */
+    this.getSortButtons = (headerItem) => {
+        return headerItem.querySelectorAll(".sort-buttons div");
+    };
+
+    /**
+     * Returns a NodeList of store list items.
+     * @returns {NodeList} The NodeList of store list items.
+     */
+    this.getStoreListItems = () => {
+        return document.querySelectorAll(".store-list-item");
+    };
+
+    /**
+     * Returns a NodeList of edit product buttons.
+     * @returns {NodeList} The NodeList of edit product buttons.
+     */
+    this.getEditProductButtons = () => {
+        return document.querySelectorAll(".update-products-btn");
+    };
+
+    /**
+     * Returns a NodeList of delete product buttons.
+     * @returns {NodeList} The NodeList of delete product buttons.
+     */
+    this.getDeleteProductButtons = () => {
+        return document.querySelectorAll(".delete-products-btn");
+    };
 
 
     /**
@@ -287,11 +405,11 @@ function View() {
     };
 
     /**
-     * Retrieves the sitebar menu element.
-     * @returns {HTMLElement} The sitebar menu.
+     * Retrieves the sidebar menu element.
+     * @returns {HTMLElement} The sidebar menu.
      */
-    this.getSitebarMenu = () => {
-        return sitebarMenu;
+    this.getSidebarMenu = () => {
+        return sidebarMenu;
     };
 
     /**
@@ -359,6 +477,14 @@ function View() {
     };
 
     /**
+     * Returns the refresh button.
+     * @returns {HTMLElement} The refresh button.
+     */
+    this.getRefreshButton = () => {
+        return refreshButton;
+    };
+
+    /**
      * Retrieves the class name for hidden elements.
      * @returns {string} The hidden class name.
      */
@@ -372,6 +498,14 @@ function View() {
      */
     this.getResetProductsButton = () => {
         return resetProductsButton;
+    };
+
+    /**
+     * Returns the button for refreshing products.
+     * @returns {HTMLElement} The refresh products button.
+     */
+    this.getRefreshProductsButton = () => {
+        return refreshProductsButton;
     };
 
     /**
@@ -408,7 +542,7 @@ function View() {
 
     /**
      * Retrieves the create store dialog element.
-     * @returns {HTMLElement} The create store dialog.
+     * @returns {HTMLDialogElement} The create store dialog.
      */
     this.getCreateStoreDialog = () => {
         return createStoreDialog;
@@ -432,7 +566,7 @@ function View() {
 
     /**
      * Retrieves the create product dialog element.
-     * @returns {HTMLElement} The create product dialog.
+     * @returns {HTMLDialogElement} The create product dialog.
      */
     this.getCreateProductDialog = () => {
         return createProductDialog;
@@ -448,9 +582,9 @@ function View() {
 
     /**
      * Retrieves the update product popup element.
-     * @returns {HTMLElement} The update product popup.
+     * @returns {HTMLDialogElement} The update product popup.
      */
-    this.getUpdateProductPopap = () => {
+    this.getUpdateProductPopup = () => {
         return updateProductPopup;
     };
 
@@ -462,37 +596,42 @@ function View() {
         return editProductForm;
     };
 
-
     /**
-     * Hides the refresh button and shows the reset button.
+     * Switches buttons to display specified button and hide the other one.
+     * @param {HTMLElement} showButton - The button to be displayed.
+     * @param {HTMLElement} hideButton - The button to be hidden.
      */
-    this.hideRefreshShowResetButtons = () => {
-        refreshButton.classList.add(hiddenClassName);
-        resetButton.classList.remove(hiddenClassName);
+    this.switchButtons = (showButton, hideButton) => {
+        showButton.classList.remove(hiddenClassName);
+        hideButton.classList.add(hiddenClassName);
     };
 
     /**
-     * Hides the reset button and shows the refresh button.
+     * Adds a class to the specified element.
+     * @param {HTMLElement} element - The element to which the class will be added.
+     * @param {string} className - The class name to be added.
      */
-    this.hideResetShowRefreshButtons = () => {
-        refreshButton.classList.remove(hiddenClassName);
-        resetButton.classList.add(hiddenClassName);
+    this.addClassName = (element, className) => {
+        return element.classList.add(className);
     };
 
     /**
-     * Hides the refresh products button and shows the reset products button.
+     * Removes a class from the specified element.
+     * @param {HTMLElement} element - The element from which the class will be removed.
+     * @param {string} className - The class name to be removed.
      */
-    this.hideRefreshShowResetProductsButtons = () => {
-        refreshProductsButton.classList.add(hiddenClassName);
-        resetProductsButton.classList.remove(hiddenClassName);
+    this.removeClassName = (element, className) => {
+        return element.classList.remove(className);
     };
 
     /**
-     * Hides the reset products button and shows the refresh products button.
+     * Checks if the specified element contains the given class.
+     * @param {HTMLElement} element - The element to check for the class.
+     * @param {string} className - The class name to check for.
+     * @returns {boolean} - True if the element contains the class; otherwise, false.
      */
-    this.hideResetShowRefreshProductsButtons = () => {
-        refreshProductsButton.classList.remove(hiddenClassName);
-        resetProductsButton.classList.add(hiddenClassName);
+    this.isContainsClassName = (element, className) => {
+        return element.classList.contains(className);
     };
 
     /**
@@ -510,14 +649,14 @@ function View() {
     };
 
     /**
-     * Handles the scrolling behavior of the sitebar menu.
+     * Handles the scrolling behavior of the sidebar menu.
      */
-    this.handleSitebarMenuScroll = () => {
+    this.handleSidebarMenuScroll = () => {
         const upButton = document.querySelector("#stores-list-up-button");
         const downButton = document.querySelector("#stores-list-down-button");
         const pinButton = document.querySelector("#stores-list-pin-button");
         const controlButtons = document.querySelector("#stores-list-control-buttons");
-        const sitebarMenuHeader = document.querySelector("#sitebar-menu__header");
+        const sidebarMenuHeader = document.querySelector("#sidebar-menu__header");
 
         const distanceFromTop = controlButtons.getBoundingClientRect().top;
 
@@ -525,12 +664,12 @@ function View() {
             upButton.classList.add(hiddenClassName);
             downButton.classList.remove(hiddenClassName);
             pinButton.classList.add(hiddenClassName);
-            sitebarMenuHeader.classList.add(borderedHeaderClassName);
+            sidebarMenuHeader.classList.add(borderedHeaderClassName);
         } else {
             upButton.classList.remove(hiddenClassName);
             downButton.classList.add(hiddenClassName);
             pinButton.classList.remove(hiddenClassName);
-            sitebarMenuHeader.classList.remove(borderedHeaderClassName);
+            sidebarMenuHeader.classList.remove(borderedHeaderClassName);
         }
     };
 
@@ -687,7 +826,6 @@ function View() {
         const detailsFooter = document.querySelector("#footer-menu-details");
         detailsFooter.classList.remove(hiddenClassName);
     };
-
 
     /**
      * Hides the store details by updating the display of relevant elements.
@@ -871,12 +1009,13 @@ function View() {
      * @param {object} item - The product data.
      */
     this.createProductRatingDiv = (productRow, item) => {
+        const maxRating = 5;
         const productRatingDiv = document.createElement("div");
         productRatingDiv.className = "products-list__list-item product-rating center-item";
         productRatingDiv.title = item.Rating;
-        productRatingDiv.dataset.rating = item.Rating;
 
-        const emptyStartsAmount = 5 - item.Rating;
+        productRatingDiv.dataset.rating = item.Rating;
+        const emptyStartsAmount = maxRating - item.Rating;
 
         for (let i = 0; i &lt; item.Rating; i++) {
             const starFull = document.createElement("i");
@@ -966,15 +1105,35 @@ function View() {
 
     /**
      * Fills the form in the product data section with the provided data.
-     * @param {object} data - The data to fill the form with.
+     * @param {object} productData - The data to fill the form with.
      */
-    this.fillFormProductData = data => {
-        const elements = editProductForm.elements;
-        for (let key1 in data) {
-            if (elements[key1]) {
-                elements[key1].value = data[key1];
+    this.fillFormProductData = productData => {
+        const formElements = editProductForm.elements;
+        for (let inputName in productData) {
+            if (formElements[inputName]) {
+                formElements[inputName].value = productData[inputName];
             }
         }
+    };
+
+    /**
+     * Displays a toast notification with an auto-close feature.
+     *
+     * @param {string} message - The message to be displayed in the notification.
+     * @param {number} [durationInSeconds=5] - The duration, in seconds, for which the notification will be displayed before auto-closing.
+     */
+    this.showToastNotificationWithAutoClose = (message, durationInSeconds = 5) => {
+        const notificationElement = document.createElement('div');
+        notificationElement.className = 'toast-notification';
+
+        const messageContainer = document.createElement('div');
+        messageContainer.className = 'message-container';
+        messageContainer.textContent = message;
+
+        notificationElement.appendChild(messageContainer);
+        document.body.appendChild(notificationElement);
+
+        setTimeout(() => notificationElement.remove(), durationInSeconds * 1000);
     };
 }</code></pre>
         </article>
@@ -992,7 +1151,7 @@ function View() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jan 04 2024 17:17:17 GMT+0300 (Москва, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 08 2024 12:43:07 GMT+0300 (Москва, стандартное время)
 </footer>
 
 <script> prettyPrint(); </script>

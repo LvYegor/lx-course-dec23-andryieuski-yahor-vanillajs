@@ -8,49 +8,49 @@ function Model() {
      * @private
      * @type {string}
      */
-    const hostURL = "http://localhost:3000/api/";
+    const _hostURL = "http://localhost:3000/api/";
 
     /**
      * Current store data.
      * @private
      * @type {Object|null}
      */
-    let currentStoreData = null;
+    let _currentStoreData = null;
 
     /**
      * ID of the selected product.
      * @private
      * @type {string|null}
      */
-    let selectedProductId = null;
+    let _selectedProductId = null;
 
     /**
      * Current value of the products search input.
      * @private
      * @type {string|null}
      */
-    let currentProductsSearchInputValue = null;
+    let _currentProductSearchInput = null;
 
     /**
      * Current filter status for products.
      * @private
      * @type {string|null}
      */
-    let currentFilterStatus = null;
+    let _currentFilterStatus = null;
 
     /**
      * Current order mode for products.
      * @private
      * @type {string|null}
      */
-    let currentOrderMode = null;
+    let _currentOrderMode = null;
 
     /**
      * Get the current value of the products search input.
      * @returns {string|null} The current products search input value.
      */
     this.getCurrentProductsSearchInputValue = () => {
-        return currentProductsSearchInputValue;
+        return _currentProductSearchInput;
     };
 
     /**
@@ -58,7 +58,7 @@ function Model() {
      * @param {string|null} value - The new value for the products search input.
      */
     this.setCurrentProductsSearchInputValue = (value) => {
-        currentProductsSearchInputValue = value;
+        _currentProductSearchInput = value;
     };
 
     /**
@@ -66,7 +66,7 @@ function Model() {
      * @returns {string|null} The current filter status.
      */
     this.getCurrentFilterStatus = () => {
-        return currentFilterStatus;
+        return _currentFilterStatus;
     };
 
     /**
@@ -74,7 +74,7 @@ function Model() {
      * @param {string|null} status - The new filter status for products.
      */
     this.setCurrentFilterStatus = (status) => {
-        currentFilterStatus = status;
+        _currentFilterStatus = status;
     };
 
     /**
@@ -82,7 +82,7 @@ function Model() {
      * @returns {string|null} The current order mode.
      */
     this.getCurrentOrderMode = () => {
-        return currentOrderMode;
+        return _currentOrderMode;
     };
 
     /**
@@ -90,7 +90,7 @@ function Model() {
      * @param {string|null} mode - The new order mode for products.
      */
     this.setCurrentOrderMode = (mode) => {
-        currentOrderMode = mode;
+        _currentOrderMode = mode;
     };
 
     /**
@@ -98,15 +98,15 @@ function Model() {
      * @param {number|null} id - The ID of the selected product.
      */
     this.setSelectedProductId = (id) => {
-        selectedProductId = id;
+        _selectedProductId = id;
     };
 
     /**
      * Get the ID of the selected product.
-     * @returns {string|null} The ID of the selected product.
+     * @returns {number|null} The ID of the selected product.
      */
     this.getSelectedProductId = () => {
-        return selectedProductId;
+        return _selectedProductId;
     };
 
     /**
@@ -114,7 +114,7 @@ function Model() {
      * @returns {Object|null} The current store data.
      */
     this.getCurrentStoreData = () => {
-        return currentStoreData;
+        return _currentStoreData;
     };
 
     /**
@@ -122,7 +122,7 @@ function Model() {
      * @param {Object|null} data - The new store data.
      */
     this.setCurrentStoreData = (data) => {
-        currentStoreData = data;
+        _currentStoreData = data;
     };
 
     /**
@@ -130,7 +130,7 @@ function Model() {
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.fetchStores = () => {
-        return fetch(hostURL + "Stores")
+        return fetch(_hostURL + "Stores")
             .then(response => response.json())
             .catch(console.error);
     };
@@ -151,7 +151,7 @@ function Model() {
             }
         };
         const queryParams = new URLSearchParams({filter: JSON.stringify(filter)});
-        const urlWithParams = `${hostURL}Stores?${queryParams.toString()}`;
+        const urlWithParams = `${_hostURL}Stores?${queryParams.toString()}`;
 
         return fetch(urlWithParams)
             .then(response => response.json())
@@ -164,7 +164,7 @@ function Model() {
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.fetchStoreProductsById = (storeId) => {
-        return fetch(hostURL + `Stores/${storeId}/rel_Products`)
+        return fetch(_hostURL + `Stores/${storeId}/rel_Products`)
             .then(response => response.json())
             .catch(console.error);
     };
@@ -199,7 +199,7 @@ function Model() {
         }
 
         const queryParams = new URLSearchParams({filter: JSON.stringify(filter)});
-        const urlWithParams = `${hostURL}Stores/${storeId}/rel_Products?${queryParams.toString()}`;
+        const urlWithParams = `${_hostURL}Stores/${storeId}/rel_Products?${queryParams.toString()}`;
 
         return fetch(urlWithParams)
             .then(response => response.json())
@@ -208,11 +208,11 @@ function Model() {
 
     /**
      * Fetch product details by ID.
-     * @param {string} id - The ID of the product.
+     * @param {number} id - The ID of the product.
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.getProductById = (id) => {
-        return fetch(hostURL + `Products/${id}`)
+        return fetch(_hostURL + `Products/${id}`)
             .then(response => response.json())
             .catch(console.error);
     };
@@ -223,7 +223,7 @@ function Model() {
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.getStoreDataById = (id) => {
-        return fetch(hostURL + `Stores/${id}`)
+        return fetch(_hostURL + `Stores/${id}`)
             .then(response => response.json())
             .catch(console.error);
     };
@@ -242,7 +242,7 @@ function Model() {
             Established: data.Date.value,
             FloorArea: data.FloorArea.value
         };
-        return fetch(hostURL + "Stores", {
+        return fetch(_hostURL + "Stores", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
@@ -257,7 +257,7 @@ function Model() {
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.deleteStoreById = (id) => {
-        return fetch(hostURL + `Stores/${id}`, {method: "DELETE"}).catch(console.error);
+        return fetch(_hostURL + `Stores/${id}`, {method: "DELETE"}).catch(console.error);
     };
 
     /**
@@ -276,9 +276,9 @@ function Model() {
             MadeIn: data.MadeIn.value,
             ProductionCompanyName: data.ProductionCompanyName.value,
             Status: data.Status.value,
-            StoreId: currentStoreData.id
+            StoreId: _currentStoreData.id
         };
-        return fetch(hostURL + "Products", {
+        return fetch(_hostURL + "Products", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
@@ -290,7 +290,7 @@ function Model() {
     /**
      * Update a product by ID.
      * @param {Object} data - The updated data for the product.
-     * @param {string} productId - The ID of the product to update.
+     * @param {number} productId - The ID of the product to update.
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.updateProduct = (data, productId) => {
@@ -304,10 +304,10 @@ function Model() {
             MadeIn: data.MadeIn.value,
             ProductionCompanyName: data.ProductionCompanyName.value,
             Status: data.Status.value,
-            StoreId: currentStoreData.id,
+            StoreId: _currentStoreData.id,
             id: productId
         };
-        return fetch(hostURL + "Products", {
+        return fetch(_hostURL + "Products", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
@@ -322,7 +322,6 @@ function Model() {
      * @returns {Promise} A promise that resolves with the response data or rejects with an error.
      */
     this.deleteProductFromStoreById = (id) => {
-        return fetch(hostURL + `Products/${id}`, {method: "DELETE"}).catch(console.error);
-        ;
+        return fetch(_hostURL + `Products/${id}`, {method: "DELETE"}).catch(console.error);
     };
 }

@@ -10,14 +10,14 @@
     display: flex;
 }
 
-.sitebar-menu {
+.sidebar-menu {
     flex: 0 0 300px;
     height: 100vh;
     overflow-y: auto;
     border-right: solid 1px #afcfe7;
 }
 
-.sitebar-menu__header {
+.sidebar-menu__header {
     position: sticky;
     top: 0;
     background: #eff4f8;
@@ -28,7 +28,7 @@
     border-bottom: solid 1px #afcfe7;
 }
 
-.sitebar-menu__list {
+.sidebar-menu__list {
     margin: 0;
     padding-left: 0;
     list-style-type: none;
@@ -88,18 +88,18 @@
     box-shadow: 0 1px 10px -2px steelblue;
 }
 
-.sitebar-menu__input {
+.sidebar-menu__input {
     display: flex;
     align-items: center;
     border: solid gainsboro 1px;
     height: 30px;
 }
 
-.sitebar-menu__input:hover {
+.sidebar-menu__input:hover {
     border: solid #8da1a4 1px;
 }
 
-.sitebar-menu__input > input {
+.sidebar-menu__input > input {
     display: flex;
     flex: 1;
     height: 100%;
@@ -107,11 +107,11 @@
     padding-left: 10px;
 }
 
-.sitebar-menu__input > input::placeholder {
+.sidebar-menu__input > input::placeholder {
     font-style: italic;
 }
 
-.sitebar-menu__input > button {
+.sidebar-menu__input > button {
     height: 100%;
     width: 30px;
     cursor: pointer;
@@ -120,7 +120,7 @@
     color: steelblue;
 }
 
-.sitebar-menu__input > button:hover {
+.sidebar-menu__input > button:hover {
     background: lightgray;
 }
 
@@ -205,7 +205,6 @@
 }
 
 .store-details-container__header {
-    padding-left: 45px;
     background: #eff4f8;
     position: sticky;
     top: 0;
@@ -501,7 +500,7 @@ dialog::backdrop {
 }
 
 .popup-name {
-    padding: 10px 0px;
+    padding: 10px 0;
     text-align: center;
     font-size: 20px;
     border-bottom: 1px solid rgb(218, 218, 218);
@@ -536,7 +535,7 @@ dialog::backdrop {
 }
 
 .popup menu {
-    margin: 0px;
+    margin: 0;
     padding: 10px 20px;
     text-align: right;
     background: rgba(72, 91, 108, 0.9);
@@ -617,8 +616,25 @@ select:invalid {
     border: 2px solid rgb(197, 24, 24);
 }
 
+.toast-notification {
+    padding: 15px 20px;
+    background-color: rgba(72, 91, 108, 1);
+    border-radius: 5px;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.message-container{
+    width: 170px;
+    color:white;
+    text-align: center;
+}
+
 @media (max-width: 833px) {
-    .sitebar-menu {
+    .sidebar-menu {
         display: none;
     }
 

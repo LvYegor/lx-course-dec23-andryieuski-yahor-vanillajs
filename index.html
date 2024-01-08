@@ -11,14 +11,14 @@
 </head>
 <body>
 <div class="stores-menu">
-    <aside id="sitebar-menu" class="sitebar-menu">
-        <header id="sitebar-menu__header" class="sitebar-menu__header">
+    <aside id="sidebar-menu" class="sidebar-menu">
+        <header id="sidebar-menu__header" class="sidebar-menu__header">
             <h3 class="title">Stores List</h3>
         </header>
 
         <!-- Stores list input container -->
         <div class="search">
-            <div class="sitebar-menu__input">
+            <div class="sidebar-menu__input">
                 <input id="search-input" class="search-input" placeholder="Search"/>
                 <button id="search-button" class="search-button">
                     <i class="fas fa-search"></i>
@@ -53,7 +53,7 @@
         </div>
 
         <!-- Stores list -->
-        <ul id="sitebar-menu__list" class="sitebar-menu__list"></ul>
+        <ul id="sidebar-menu__list" class="sidebar-menu__list"></ul>
 
         <!-- Stores list footer -->
         <footer class="footer-menu footer-position-aside">
@@ -152,7 +152,7 @@
                 <div id="products-list" class="products-list hidden">
                     <div class="products-list__title">
                         <p>Products</p>
-                        <div class="sitebar-menu__input">
+                        <div class="sidebar-menu__input">
                             <input id="products-search-input" class="search-input" placeholder="Search">
                             <button id="products-search-button" class="search-button">
                                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -280,12 +280,13 @@
             <input
                     type="number"
                     name="FloorArea"
+                    min="1"
                     placeholder="Enter floor area"
                     required
             />
         </section>
         <menu>
-            <button class="popup-create-btn" type="submit">Create</button>
+            <button class="popup-create-btn" id="popup-create-store-btn" type="submit">Create</button>
             <button class="popup-cancel-btn" type="reset">Cancel</button>
         </menu>
     </form>
@@ -303,6 +304,7 @@
             <input
                     type="number"
                     name="Price"
+                    min="1"
                     placeholder="Enter price"
                     required
             />
@@ -375,6 +377,7 @@
             <input
                     type="number"
                     name="Price"
+                    min="1"
                     placeholder="Enter price"
                     required
             />
@@ -435,6 +438,34 @@
             <button class="popup-cancel-btn" type="reset">Cancel</button>
         </menu>
     </form>
+</dialog>
+
+<dialog id="delete-store-popup" class="popup">
+    <div class="popup-name">
+        <i class="fa-regular fa-circle-question"></i>
+        Confirmation
+    </div>
+    <section>
+        <p>Are you sure you want to delete this store?</p>
+    </section>
+    <menu>
+        <button class="popup-create-btn" id="delete-store-ok" type="button">OK</button>
+        <button class="popup-cancel-btn" id="delete-store-cancel" type="button">Cancel</button>
+    </menu>
+</dialog>
+
+<dialog id="delete-product-popup" class="popup">
+    <div class="popup-name">
+        <i class="fa-regular fa-circle-question"></i>
+        Confirmation
+    </div>
+    <section>
+        <p>Are you sure you want to delete this product?</p>
+    </section>
+    <menu>
+        <button class="popup-create-btn" id="delete-product-ok" type="button">OK</button>
+        <button class="popup-cancel-btn" id="delete-product-cancel" type="button">Cancel</button>
+    </menu>
 </dialog>
 
 <script type="text/javascript" src="model.js"></script>
