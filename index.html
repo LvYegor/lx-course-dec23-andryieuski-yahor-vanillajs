@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Stores Summary</title>
+    <link rel="stylesheet" href="./style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Muli&display=swap" rel="stylesheet"/>
+
+    <script src="https://kit.fontawesome.com/5b59badcee.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="stores-menu">
+    <aside id="sidebar-menu" class="sidebar-menu">
+        <header id="sidebar-menu__header" class="sidebar-menu__header">
+            <h3 class="title">Stores List</h3>
+        </header>
+
+        <!-- Stores list input container -->
+        <div class="search">
+            <div class="sidebar-menu__input">
+                <input id="search-input" class="search-input" placeholder="Search"/>
+                <button id="search-button" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="refresh-button" class="refresh-button">
+                    <i class="fas fa-sync"></i>
+                </button>
+                <button id="reset-button" class="reset-button hidden">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hide and pin buttons -->
+        <div id="stores-list-control-buttons" class="control-buttons">
+            <div class="pin-up">
+                <button id="stores-list-up-button">
+                    <i class="fas fa-angle-up"></i>
+                </button>
+                <button id="stores-list-down-button" class="hidden">
+                    <i class="fa-solid fa-angle-down"></i>
+                </button>
+                <button id="stores-list-pin-button">
+                    <i class="fas fa-thumbtack"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="empty-stores-list-icon" class="not-selected-item-message hidden">
+            <i class="fa-solid fa-store-slash not-selected-icon"></i>
+            <h4>The list of stores is empty</h4>
+        </div>
+
+        <!-- Stores list -->
+        <ul id="sidebar-menu__list" class="sidebar-menu__list"></ul>
+
+        <!-- Stores list footer -->
+        <footer class="footer-menu footer-position-aside">
+            <button id="create-store-button">
+                <i class="fas fa-plus"></i>
+                <span>Create</span>
+            </button>
+        </footer>
+    </aside>
+
+    <!-- Stores details -->
+    <div id="store-details-container" class="store-details-container">
+        <header class="store-details-container__header">
+            <h3 id="details-title" class="title hidden">Store Details</h3>
+            <h3 id="not-selected-details-title" class="title">Store is not selected</h3>
+        </header>
+
+        <div class="store-details-table">
+            <div id="store-details-table__requisites-left" class="store-details-table__requisites hidden">
+                <div class="requisite"><b>Email:</b>
+                    <p id="email"></p></div>
+                <div class="requisite"><b>Phone Number:</b>
+                    <p id="phone-number"></p></div>
+                <div class="requisite"><b>Address:</b>
+                    <p id="address"></p></div>
+            </div>
+            <div id="store-details-table__requisites-right" class="store-details-table__requisites hidden">
+                <div class="requisite"><b>Established Date:</b>
+                    <p id="established-date"></p></div>
+                <div class="requisite"><b>Floor Area:</b>
+                    <p id="floor-area"></p></div>
+            </div>
+        </div>
+
+        <div id="control-buttons" class="control-buttons hidden">
+            <div class="pin-up">
+                <button id="stores-details-up-button">
+                    <i class="fas fa-angle-up"></i>
+                </button>
+                <button id="stores-details-down-button" class="hidden">
+                    <i class="fa-solid fa-angle-down"></i>
+                </button>
+                <button id="stores-details-pin-button">
+                    <i class="fas fa-thumbtack"></i>
+                </button>
+            </div>
+        </div>
+        <div id="store-details" class="amount-of-products hidden">
+            <div id="button-all" class="amount-of-products__all bordered-all-filter" data-is-active="true"
+                 data-filter-key="ALL">
+                <span id="amount-all-filter"></span>
+                <span>All</span>
+            </div>
+
+            <div class="vertical-line"></div>
+
+            <div class="button-ok amount-of-products__button">
+                <div class="amount-of-products__wrapper">
+                    <button id="button-ok" data-is-active="false" data-filter-key="OK">
+                        <i class="fa-regular fa-circle-check"></i>
+                    </button>
+                    <p>Ok</p>
+                    <span id="amount-ok-filter" class="amount-all_span"></span>
+                </div>
+            </div>
+
+            <div class="button-storage amount-of-products__button">
+                <div class="amount-of-products__wrapper">
+                    <button id="button-storage" data-is-active="false" data-filter-key="STORAGE">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </button>
+                    <p>Storage</p>
+                    <span id="amount-storage-filter" class="amount-all_span"></span>
+                </div>
+            </div>
+
+            <div class="button-out-of-stock amount-of-products__button">
+                <div class="amount-of-products__wrapper">
+                    <button id="button-out-of-stock" data-is-active="false" data-filter-key="OUT_OF_STOCK">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </button>
+                    <p>Out of stock</p>
+                    <span id="amount-out-of-stock-filter" class="amount-all_span"></span>
+                </div>
+            </div>
+        </div>
+        <main>
+            <section>
+                <div id="not-selected-item-message" class="not-selected-item-message">
+                    <i class="fa-solid fa-store not-selected-icon"></i>
+                    <h4>The store is not selected</h4>
+                    <p>Please select the store to proceed</p>
+                </div>
+
+                <!-- Store details. Products list  -->
+                <div id="products-list" class="products-list hidden">
+                    <div class="products-list__title">
+                        <p>Products</p>
+                        <div class="sidebar-menu__input">
+                            <input id="products-search-input" class="search-input" placeholder="Search">
+                            <button id="products-search-button" class="search-button">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </button>
+                            <button id="products-refresh-button" class="refresh-button">
+                                <i class="fas fa-sync" aria-hidden="true"></i>
+                            </button>
+                            <button id="products-reset-button" class="reset-button hidden">
+                                <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="products-list__header">
+                        <div class="products-list__header-item ">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Name</p>
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Price</p>
+
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Specs</p>
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Supplier Info</p>
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Country of origin</p>
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Prod. company</p>
+                        </div>
+                        <div class="products-list__header-item">
+                            <div class="sort-buttons">
+                                <div><i class="fa-solid fa-sort"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                                <div class="hidden"><i class="fa-solid fa-arrow-up-wide-short"></i></div>
+                            </div>
+                            <p>Rating</p>
+                        </div>
+                        <div class="products-list__header-item"></div>
+                        <div class="products-list__header-item"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Store details footer -->
+        <footer id="footer-menu-details" class="footer-menu footer-position-main hidden">
+            <button id="create-product-button">
+                <i class="fas fa-plus"></i>
+                <span>Create</span>
+            </button>
+            <button id="delete-store-button">
+                <i class="far fa-trash-alt"></i>
+                <span>Delete</span>
+            </button>
+        </footer>
+    </div>
+</div>
+
+<dialog id="create-store-popup" class="popup">
+    <div class="popup-name">
+        Create new store
+    </div>
+    <form method="dialog" id="create-store-form" name="storeform">
+        <section>
+            <label for="create-store-popup">Name:</label>
+            <input type="text" name="Name" placeholder="Enter name" required/>
+            <label for="create-store-popup">Email:</label>
+            <input type="email" name="Email" placeholder="Enter email" required/>
+            <label for="create-store-popup">Phone number:</label>
+            <input
+                    type="text"
+                    name="PhoneNumber"
+                    placeholder="Enter phone number"
+                    required
+            />
+            <label for="create-store-popup">Address:</label>
+            <input
+                    type="text"
+                    name="Address"
+                    placeholder="Enter address"
+                    required
+            />
+            <label for="create-store-popup">Established date:</label>
+            <input
+                    type="date"
+                    name="Date"
+                    placeholder="Enter established date"
+                    required
+            />
+            <label for="create-store-popup">Floor area:</label>
+            <input
+                    type="number"
+                    name="FloorArea"
+                    min="1"
+                    placeholder="Enter floor area"
+                    required
+            />
+        </section>
+        <menu>
+            <button class="popup-create-btn" id="popup-create-store-btn" type="submit">Create</button>
+            <button class="popup-cancel-btn" type="reset">Cancel</button>
+        </menu>
+    </form>
+</dialog>
+
+<dialog id="create-product-popup" class="popup">
+    <div class="popup-name">
+        Create new product
+    </div>
+    <form method="dialog" id="create-product-form">
+        <section>
+            <label for="create-product-popup">Name:</label>
+            <input type="text" name="Name" placeholder="Enter name" required/>
+            <label for="create-product-popup">Price:</label>
+            <input
+                    type="number"
+                    name="Price"
+                    min="1"
+                    placeholder="Enter price"
+                    required
+            />
+            <label for="create-product-popup">Specs:</label>
+            <textarea
+                    type="text"
+                    name="Specs"
+                    placeholder="Enter product specs"
+                    required
+            ></textarea>
+            <label for="create-product-popup">Rating:</label>
+            <input
+                    type="number"
+                    name="Rating"
+                    min="1" max="5" step="number"
+                    placeholder="Enter rating 1...5"
+                    required
+            />
+            <label for="create-product-popup">Suplplier Info:</label>
+            <textarea
+                    type="text"
+                    name="SupplierInfo"
+                    placeholder="Enter supplier info"
+                    required
+            ></textarea>
+            <label for="create-product-popup">Made in:</label>
+            <input
+                    type="text"
+                    name="MadeIn"
+                    placeholder="Enter origin country"
+                    required
+            />
+            <label for="create-product-popup">Production company name:</label>
+            <input
+                    type="text"
+                    name="ProductionCompanyName"
+                    placeholder="Enter manufacturer name"
+                    required
+            />
+            <label for="create-product-popup">Status:</label>
+            <select name="Status" required>
+                <option value="" selected disabled class="hidden">Enter status</option>
+                <option value="OK">
+                    Ok
+                </option>
+                <option value="STORAGE">
+                    Storage
+                </option>
+                <option value="OUT_OF_STOCK">
+                    Out of stock
+                </option>
+            </select>
+        </section>
+        <menu>
+            <button class="popup-create-btn" type="submit">Create</button>
+            <button class="popup-cancel-btn" type="reset">Cancel</button>
+        </menu>
+    </form>
+</dialog>
+
+<dialog id="edit-product-popup" class="popup">
+    <div class="popup-name">
+        Edit product
+    </div>
+    <form method="dialog" id="edit-product-form">
+        <section>
+            <label for="edit-product-popup">Name</label>
+            <input type="text" name="Name" placeholder="Enter name" required/>
+            <label for="edit-product-popup">Price</label>
+            <input
+                    type="number"
+                    name="Price"
+                    min="1"
+                    placeholder="Enter price"
+                    required
+            />
+            <label for="edit-product-popup">Specs</label>
+            <textarea
+                    type="text"
+                    name="Specs"
+                    placeholder="Enter product specs"
+                    required
+            ></textarea>
+            <label for="edit-product-popup">Rating</label>
+            <input
+                    type="number"
+                    name="Rating"
+                    min="1" max="5" step="number"
+                    placeholder="Enter rating 1...5"
+                    required
+            />
+            <label for="edit-product-popup">Suplplier Info</label>
+            <textarea
+                    type="text"
+                    name="SupplierInfo"
+                    placeholder="Enter supplier info"
+                    required
+            ></textarea>
+            <label for="edit-product-popup">Made in</label>
+            <input
+                    type="text"
+                    name="MadeIn"
+                    placeholder="Enter origin country"
+                    required
+            />
+            <label for="edit-product-popup">Production company name</label>
+            <input
+                    type="text"
+                    name="ProductionCompanyName"
+                    placeholder="Enter manufacturer name"
+                    required
+            />
+            <label for="edit-product-popup">Status</label>
+            <select name="Status" required>
+                <option value="" selected disabled class="option-hidden">
+                    Enter status
+                </option>
+                <option value="OK">
+                    Ok
+                </option>
+                <option value="STORAGE">
+                    Storage
+                </option>
+                <option value="OUT_OF_STOCK">
+                    Out of stock
+                </option>
+            </select>
+        </section>
+        <menu>
+            <button class="popup-create-btn" type="submit">Update</button>
+            <button class="popup-cancel-btn" type="reset">Cancel</button>
+        </menu>
+    </form>
+</dialog>
+
+<dialog id="delete-store-popup" class="popup">
+    <div class="popup-name">
+        <i class="fa-regular fa-circle-question"></i>
+        Confirmation
+    </div>
+    <section>
+        <p>Are you sure you want to delete this store?</p>
+    </section>
+    <menu>
+        <button class="popup-create-btn" id="delete-store-ok" type="button">OK</button>
+        <button class="popup-cancel-btn" id="delete-store-cancel" type="button">Cancel</button>
+    </menu>
+</dialog>
+
+<dialog id="delete-product-popup" class="popup">
+    <div class="popup-name">
+        <i class="fa-regular fa-circle-question"></i>
+        Confirmation
+    </div>
+    <section>
+        <p>Are you sure you want to delete this product?</p>
+    </section>
+    <menu>
+        <button class="popup-create-btn" id="delete-product-ok" type="button">OK</button>
+        <button class="popup-cancel-btn" id="delete-product-cancel" type="button">Cancel</button>
+    </menu>
+</dialog>
+
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript" src="view.js"></script>
+<script type="text/javascript" src="controller.js"></script>
+</body>
+</html>
